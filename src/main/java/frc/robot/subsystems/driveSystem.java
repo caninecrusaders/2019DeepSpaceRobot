@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.Timer;
 
 //import edu.wpi.first.wpilibj.DriverStation;
 //import edu.wpi.first.wpilibj.Joystick;
@@ -52,6 +53,7 @@ public class driveSystem extends Subsystem implements PIDOutput {
 	double last_world_linear_accel_y;
 	final static double kCollisionThreshold_DeltaG = 0.6f;
 	public Ultrasonic rangeInFront = new Ultrasonic(RobotMap.frontTriggerID, RobotMap.frontEchoID);
+	static double lastThrottleTime;
 
 	WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(RobotMap.driveFrontLeftMotorID);
 	WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(RobotMap.driveFrontRightMotorID);
@@ -148,9 +150,12 @@ public class driveSystem extends Subsystem implements PIDOutput {
 		}
 		driveControl.curvatureDrive(throttle, -turn, false);
 		if (throttle > -.05 && throttle < 0.05 && !inVisionMode) {
-			driveControl.curvatureDrive(throttle, -turn * 0.5, true);
+			if (Timer.getFPGATimestamp() - lastThrottleTime > 0.25) {
+				driveControl.curvatureDrive(0, -turn * 0.2, true);
+			}
 		} else {
 			driveControl.curvatureDrive(throttle, -turn, false);
+			lastThrottleTime = Timer.getFPGATimestamp();
 		}
 	}
 	// public void tankDriveXbox() {
@@ -246,7 +251,18 @@ public class driveSystem extends Subsystem implements PIDOutput {
 			return false;
 		}
 		if (dPadValue > 180) {
-			dPadValue = dPadValue - 360;
+			if (dPadValue == 45) {
+				dPadValue = 61;
+			} else if (dPadValue == 135) {
+				dPadValue = 119;
+			} else if (dPadValue == 225) {
+				dPadValue = -61;
+			} else if (dPadValue == 315) {
+				dPadValue = -119;
+			} else {
+				dPadValue = dPadValue - 360;
+			}
+
 		}
 		if (isRotating) {
 			rotateToAngle(dPadValue);

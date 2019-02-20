@@ -25,12 +25,27 @@ public class cmdWristXbox extends Command {
     protected void execute() {
         double intakeIn = -Robot.oi.xboxDriver2.getRawAxis(1);
         double intakeOut = -intakeIn;
-        if (intakeIn > 0/* && Robot.wrist.rangeFinder.getAverageVoltage() > captureDistance */) {
-            Robot.wrist.intakeIn(intakeIn);
-        } else if (intakeOut > 0 /* && Robot.wrist.rangeFinder.getAverageVoltage() < releaseDistance */) {
-            Robot.wrist.intakeOut(intakeOut);
+        if (Robot.elevator.isBallMode()) {
+            if (intakeIn > 0/*
+                             * && Robot.wrist.rangeFinder.getAverageVoltage() > captureDistance
+                             */) {
+                Robot.wrist.intakeIn(intakeIn);
+            } else if (intakeOut > 0 /*
+                                      * && Robot.wrist.rangeFinder.getAverageVoltage() < releaseDistance
+                                      */) {
+                // Robot.wrist.intakeOut(intakeOut);
+                Robot.wrist.intakeOut(intakeOut);
+            } else {
+                Robot.wrist.intakeStop();
+                // Robot.wrist.hatchRetract();
+            }
         } else {
-            Robot.wrist.intakeStop();
+            // hatch mode
+            if (intakeIn > 0.25 || intakeIn < -0.25) {
+                Robot.wrist.hatchExtend();
+            } else {
+                Robot.wrist.hatchRetract();
+            }
         }
 
         // if (Robot.wrist.rangeFinder.getAverageVoltage() < captureDistance) {

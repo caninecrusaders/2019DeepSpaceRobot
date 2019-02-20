@@ -10,11 +10,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class cmdIntakeXbox extends Command {
-  public int i = 0;
-
-  public cmdIntakeXbox() {
-    requires(Robot.wrist);
+public class cmdHatchExtend extends Command {
+  public cmdHatchExtend() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -22,28 +19,12 @@ public class cmdIntakeXbox extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    // double out = Robot.oi.xboxDriver.getRawAxis(2);
-    // double in = Robot.oi.xboxDriver.getRawAxis(3);
-    // if (in > 0) {
-    // Robot.wrist.intakeIn(in);
-    // } else if (out > 0) {
-    // Robot.wrist.intakeOut(out);
-    // } else {
-    // Robot.wrist.intakeStop();
-    // }
-    double out = Robot.oi.xboxDriver2.getRawAxis(1);
-    if (out < 0) {
-      Robot.wrist.intakeOut(-out);
-    } else if (out > 0) {
-      Robot.wrist.intakeIn(out);
-    } else {
-      Robot.wrist.intakeStop();
-    }
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.wrist.hatchExtend();
   }
 
   // Make this return true when this Command no longer needs to run execute()

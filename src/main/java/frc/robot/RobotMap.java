@@ -47,8 +47,8 @@ public class RobotMap {
   public static final int frontEchoID = 8;
   public static final int floorTriggerID = 6;
   public static final int floorEchoID = 7;
-  public static final int hatchExtendID = 6;
-  public static final int hatchRetractID = 7;
+  public static final int hatchExtendID = 7;
+  public static final int hatchRetractID = 6;
   public static final int hatchModuleID = 1;
 
   public static void init() {

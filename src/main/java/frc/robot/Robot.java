@@ -53,8 +53,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     RobotMap.init();
     try {
-      // ahrs = new AHRS(SPI.Port.kMXP);
-      ahrs = new AHRS(SerialPort.Port.kUSB);
+      ahrs = new AHRS(SPI.Port.kMXP);
+      // ahrs = new AHRS(SerialPort.Port.kUSB);
       // ahrs = new AHRS(I2C.Port.kMXP);
     } catch (RuntimeException ex) {
       DriverStation.reportError("Error instantiating navX-MXP" + ex.getMessage(), true);
@@ -96,6 +96,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Pitch", ahrs.getPitch());
     SmartDashboard.putNumber("Roll", ahrs.getRoll());
     SmartDashboard.putNumber("visionAngle", Robot.driveSystem.visionAngle);
+    SmartDashboard.putNumber("Pot Value", Robot.elevator.elevatorPot.getAverageVoltage());
+    SmartDashboard.putBoolean("IsBallMode", Robot.elevator.isBallMode());
 
     double v = Robot.vision.getAngle();
     // SmartDashboard.putBoolean("optical", RobotMap.opticalFront.get());

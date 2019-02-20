@@ -37,7 +37,7 @@ public class Elevator extends Subsystem implements PIDOutput {
   final static double kCollisionThreshold_DeltaG = 0.6f;
 
   private final WPI_TalonSRX elevatorMotor = new WPI_TalonSRX(RobotMap.elevatorMotorID);
-  private final AnalogInput elevatorPot = new AnalogInput(RobotMap.elevatorPotID);
+  public AnalogInput elevatorPot = new AnalogInput(RobotMap.elevatorPotID);
   private final double[] potHatch = new double[] { 0.0, 1.0, 2.0, 3.0 };
   private final double[] potBall = new double[] { 0.0, 1.0, 2.0, 3.0 };
   private final double potGround = 0;
@@ -72,7 +72,6 @@ public class Elevator extends Subsystem implements PIDOutput {
 
   public Elevator() {
     LiveWindow.add(elevatorPot);
-    SmartDashboard.putData(elevatorPot);
   }
 
   @Override
