@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.robot.RobotMap;
+import frc.robot.commands.cgBallRumble;
 import frc.robot.commands.cmdElevatorXbox;
 import frc.robot.Robot;
 
@@ -204,10 +205,14 @@ public class Elevator extends Subsystem implements PIDOutput {
 
   public void setBallMode() {
     isBallMode = true;
+    cgBallRumble cmd = new cgBallRumble();
+    cmd.start();
   }
 
   public void setHatchMode() {
     isBallMode = false;
+    cgBallRumble cmd = new cgBallRumble();
+    cmd.start();
   }
 
   public boolean isBallMode() {

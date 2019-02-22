@@ -62,12 +62,6 @@ public class OI {
         aButton = new JoystickButton(xboxDriver, 1);
         aButton.whileHeld(new cmdVisionMode());
 
-        xButton = new JoystickButton(xboxDriver, 3);
-        xButton.whileHeld(new cmdHatchRetract());
-
-        bButton = new JoystickButton(xboxDriver, 2);
-        bButton.whileHeld(new cmdHatchExtend());
-
         // controller 2
         rightBumper2 = new JoystickButton(xboxDriver2, 6);
         rightBumper2.whileHeld(new cmdAutoUp());

@@ -44,6 +44,7 @@ public class Robot extends TimedRobot {
   public static Elbow elbow;
   public static Climber climber;
   public static Compressor compressor;
+  public static Rumble rumble;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -83,6 +84,8 @@ public class Robot extends TimedRobot {
     compressor = new Compressor(1);
     compressor.setClosedLoopControl(true);
     LiveWindow.add(compressor);
+
+    rumble = new Rumble();
 
     oi = new OI(tableInstance);
   }
