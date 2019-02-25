@@ -25,9 +25,9 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 public class Wrist extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private final DoubleSolenoid armSolenoid = new DoubleSolenoid(RobotMap.wristModuleID, RobotMap.wristDownID,
+  public DoubleSolenoid armSolenoid = new DoubleSolenoid(RobotMap.wristModuleID, RobotMap.wristDownID,
       RobotMap.wristUpID);
-  private final DoubleSolenoid hatchSolenoid = new DoubleSolenoid(RobotMap.hatchModuleID, RobotMap.hatchExtendID,
+  public DoubleSolenoid hatchSolenoid = new DoubleSolenoid(RobotMap.hatchModuleID, RobotMap.hatchExtendID,
       RobotMap.hatchRetractID);
   private final WPI_TalonSRX intakeMotor = new WPI_TalonSRX(RobotMap.intakeMotorID);
   private boolean WristDown = false;
@@ -41,11 +41,11 @@ public class Wrist extends Subsystem {
   }
 
   public void wristUp() {
-    armSolenoid.set(Value.kForward);
+    armSolenoid.set(Value.kReverse);
   }
 
   public void wristDown() {
-    armSolenoid.set(Value.kReverse);
+    armSolenoid.set(Value.kForward);
   }
 
   public void wristOff() {

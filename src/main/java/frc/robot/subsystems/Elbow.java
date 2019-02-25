@@ -8,6 +8,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.cmdElbowXbox;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -19,7 +21,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 public class Elbow extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private final DoubleSolenoid armSolenoid = new DoubleSolenoid(RobotMap.elbowModuleID, RobotMap.elbowDownID,
+  public DoubleSolenoid armSolenoid = new DoubleSolenoid(RobotMap.elbowModuleID, RobotMap.elbowDownID,
       RobotMap.elbowUpID);
   private boolean ElbowDown = false;
   private boolean ElbowUp = true;
@@ -28,6 +30,7 @@ public class Elbow extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     setDefaultCommand(new cmdElbowXbox());
+
   }
 
   public void ElbowUp() {

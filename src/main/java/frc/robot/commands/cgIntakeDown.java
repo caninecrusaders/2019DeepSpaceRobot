@@ -16,7 +16,7 @@ public class cgIntakeDown extends CommandGroup {
    */
   public cgIntakeDown() {
     if (Robot.elevator.isBallMode()) {
-      addSequential(new cmdWristUp());
+      addSequential(new cmdWristDown());
       addSequential(new cmdElbowDown());
     } else {
       addSequential(new cmdWristDown());

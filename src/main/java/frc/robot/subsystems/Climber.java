@@ -22,6 +22,7 @@ public class Climber extends Subsystem {
   // here. Call these from Commands.
   private final WPI_TalonSRX climberMotor = new WPI_TalonSRX(RobotMap.climberMotorID);
   public Ultrasonic rangeToFloor = new Ultrasonic(RobotMap.floorTriggerID, RobotMap.floorEchoID);
+  public double timeExtend = 0;
 
   @Override
   public void initDefaultCommand() {
@@ -41,4 +42,5 @@ public class Climber extends Subsystem {
   public void stop() {
     climberMotor.stopMotor();
   }
+
 }

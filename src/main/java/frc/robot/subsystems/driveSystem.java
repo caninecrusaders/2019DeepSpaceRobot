@@ -247,7 +247,7 @@ public class driveSystem extends Subsystem implements PIDOutput {
 		if (dPadValue == -1) {
 			disablePIDController();
 			isRotating = false;
-			Robot.oi.xboxDriver.setRumble(RumbleType.kLeftRumble, 0);
+			// Robot.oi.xboxDriver.setRumble(RumbleType.kLeftRumble, 0);
 			return false;
 		}
 		if (dPadValue > 180) {

@@ -24,12 +24,12 @@ public class Rumble extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-    setDefaultCommand(new cmdRumbleXbox());
+    // setDefaultCommand(new cgBallRumble());
   }
 
   public void leftRumble(boolean isDriver1, double rumble) {
     if (isDriver1) {
-      Robot.oi.xboxDriver.setRumble(RumbleType.kLeftRumble, rumble);
+      Robot.oi.xboxDriver2.setRumble(RumbleType.kLeftRumble, rumble);
     } else {
       Robot.oi.xboxDriver2.setRumble(RumbleType.kLeftRumble, rumble);
     }
@@ -38,7 +38,7 @@ public class Rumble extends Subsystem {
 
   public void rightRumble(boolean isDriver1, double rumble) {
     if (isDriver1) {
-      Robot.oi.xboxDriver.setRumble(RumbleType.kRightRumble, rumble);
+      Robot.oi.xboxDriver2.setRumble(RumbleType.kRightRumble, rumble);
     } else {
       Robot.oi.xboxDriver2.setRumble(RumbleType.kRightRumble, rumble);
     }

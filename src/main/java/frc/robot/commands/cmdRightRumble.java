@@ -13,35 +13,39 @@ import frc.robot.Robot;
 public class cmdRightRumble extends Command {
   boolean isDriver1;
   double rumble;
+  double timeout;
 
-  public cmdRightRumble(boolean isDriver1, double rumble) {
+  public cmdRightRumble(boolean _isDriver1, double _rumble, double _timeout) {
     // Use requires() here to declare subsystem dependencies
-    this.isDriver1 = isDriver1;
-    this.rumble = rumble;
+    this.isDriver1 = _isDriver1;
+    this.rumble = _rumble;
+    this.timeout = _timeout;
     requires(Robot.rumble);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.rumble.rightRumble(this.isDriver1, this.rumble);
+    setTimeout(timeout);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.rumble.rightRumble(isDriver1, rumble);
+    // Robot.rumble.rightRumble(this.isDriver1, this.rumble);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return isTimedOut();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.rumble.stopRumble(isDriver1);
+    Robot.rumble.stopRumble(this.isDriver1);
   }
 
   // Called when another command which requires one or more of the same

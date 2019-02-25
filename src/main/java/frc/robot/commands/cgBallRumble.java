@@ -17,13 +17,15 @@ public class cgBallRumble extends CommandGroup {
    */
   public cgBallRumble() {
     // Add Commands here:
-    if (Robot.elevator.isBallMode()) {
-      addSequential(new cmdRightRumble(false, 0.1), 0.2);
-      addSequential(new WaitCommand(5));
-    } else {
-      addSequential(new cmdLeftRumble(false, 0.1), 0.2);
-      addSequential(new WaitCommand(5));
-    }
+    // if (Robot.elevator.isBallMode()) {
+    addSequential(new cmdRightRumble(false, 0.5, 2.0));
+    addSequential(new cmdRightRumble(false, 0.0, 5.0));
+    // addSequential(new WaitCommand(5));
+    // } else {
+    // addSequential(new cmdLeftRumble(false, 0.5, 2));
+    // addSequential(new cmdLeftRumble(false, 0, 5));
+    // addSequential(new WaitCommand(5));
+    // }
 
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

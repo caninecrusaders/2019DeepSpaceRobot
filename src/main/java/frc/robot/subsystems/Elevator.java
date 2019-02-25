@@ -205,14 +205,14 @@ public class Elevator extends Subsystem implements PIDOutput {
 
   public void setBallMode() {
     isBallMode = true;
-    cgBallRumble cmd = new cgBallRumble();
-    cmd.start();
+    // cgBallRumble cmd = new cgBallRumble();
+    // cmd.start();
   }
 
   public void setHatchMode() {
     isBallMode = false;
-    cgBallRumble cmd = new cgBallRumble();
-    cmd.start();
+    // cgBallRumble cmd = new cgBallRumble();
+    // cmd.start();
   }
 
   public boolean isBallMode() {

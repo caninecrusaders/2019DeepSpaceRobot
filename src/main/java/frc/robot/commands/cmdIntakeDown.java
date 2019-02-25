@@ -10,28 +10,42 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class cmdRumbleXbox extends Command {
-  public cmdRumbleXbox() {
+public class cmdIntakeDown extends Command {
+  public cmdIntakeDown() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.rumble);
+    // eg. requires(chassis);
+    requires(Robot.wrist);
+    requires(Robot.elbow);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    if (Robot.elevator.isBallMode()) {
+      Robot.wrist.wristUp();
+      Robot.elbow.ElbowDown();
+    } else {
+      Robot.wrist.wristDown();
+      Robot.elbow.ElbowDown();
+    }
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    cgBallRumble cg = new cgBallRumble();
-    cg.start();
+    if (!Robot.elevator.isBallMode()) {
+      Robot.wrist.wristUp();
+      Robot.elbow.ElbowDown();
+    } else {
+      Robot.wrist.wristDown();
+      Robot.elbow.ElbowDown();
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true

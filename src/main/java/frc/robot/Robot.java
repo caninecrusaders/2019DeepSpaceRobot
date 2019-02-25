@@ -84,6 +84,9 @@ public class Robot extends TimedRobot {
     compressor = new Compressor(1);
     compressor.setClosedLoopControl(true);
     LiveWindow.add(compressor);
+    LiveWindow.add(elbow.armSolenoid);
+    LiveWindow.add(wrist.armSolenoid);
+    // LiveWindow.addActuator(wrist.hatchSolenoid);
 
     rumble = new Rumble();
 

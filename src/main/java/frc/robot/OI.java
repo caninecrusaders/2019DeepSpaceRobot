@@ -76,7 +76,7 @@ public class OI {
         xButton2.whenPressed(new cmdHatchMode());
 
         aButton2 = new JoystickButton(xboxDriver2, 1);
-        aButton2.whenPressed(new cgIntakeDown());
+        aButton2.whenPressed(new cmdIntakeDown());
 
         yButton2 = new JoystickButton(xboxDriver2, 4);
         yButton2.whenPressed(new cgStartPosition());
