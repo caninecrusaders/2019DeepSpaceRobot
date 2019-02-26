@@ -329,18 +329,21 @@ public class driveSystem extends Subsystem implements PIDOutput {
 	}
 
 	public void drive(double speed) {
-		frontLeftMotor.set(speed);
-		backLeftMotor.set(speed);
-		frontRightMotor.set(speed);
-		backRightMotor.set(speed);
+		driveControl.curvatureDrive(speed, 0, false);
+
+		// frontLeftMotor.set(speed);
+		// backLeftMotor.set(speed);
+		// frontRightMotor.set(speed);
+		// backRightMotor.set(speed);
 	}
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	public void stop() {
-		frontLeftMotor.set(0);
-		backLeftMotor.set(0);
-		frontRightMotor.set(0);
-		backRightMotor.set(0);
+		driveControl.curvatureDrive(0, 0, false);
+		// frontLeftMotor.set(0);
+		// backLeftMotor.set(0);
+		// frontRightMotor.set(0);
+		// backRightMotor.set(0);
 	}
 }

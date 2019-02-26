@@ -48,16 +48,16 @@ public class OI {
 
         // controller 1
         rightBumper = new JoystickButton(xboxDriver, 6);
-        rightBumper.whenPressed(new cmdClimberLegOut());
+        rightBumper.whileHeld(new cmdClimberLegOut());
 
         leftBumper = new JoystickButton(xboxDriver, 5);
-        leftBumper.whenPressed(new cmdClimberLegIn());
+        leftBumper.whileHeld(new cmdClimberLegIn());
 
         resetButton = new JoystickButton(xboxDriver, 8);
         resetButton.whenPressed(new cmdResetGyro());
 
         yButton = new JoystickButton(xboxDriver, 4);
-        yButton.whenPressed(new cgStartPosition());
+        yButton.whenPressed(new cgClimber());
 
         aButton = new JoystickButton(xboxDriver, 1);
         aButton.whileHeld(new cmdVisionMode());

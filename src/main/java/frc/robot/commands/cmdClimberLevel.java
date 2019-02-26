@@ -7,40 +7,27 @@
 
 package frc.robot.commands;
 
-import com.kauailabs.navx.frc.AHRS;
-
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
 
-public class cmdClimbExtend extends Command {
-  double startTime;
-
-  public cmdClimbExtend() {
+public class cmdClimberLevel extends Command {
+  public cmdClimberLevel() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.climber);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    startTime = Timer.getFPGATimestamp();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.climber.down();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (Robot.ahrs.getPitch() < -0.15) {
-      Robot.climber.timeExtend = Timer.getFPGATimestamp() - startTime;
-      return true;
-    }
     return false;
   }
 
