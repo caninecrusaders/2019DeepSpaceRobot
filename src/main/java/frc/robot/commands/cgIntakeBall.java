@@ -15,7 +15,7 @@ public class cgIntakeBall extends CommandGroup {
    */
   public cgIntakeBall() {
     // Add Commands here:
-    addSequential(new cmdWristUp());
+    addSequential(new cmdWristDown());
     addSequential(new cmdElbowDown());
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

@@ -14,8 +14,9 @@ public class cgClimber extends CommandGroup {
    * Add your docs here.
    */
   public cgClimber() {
-    // addParallel(new cmdClimberDriveForward());
+    addParallel(new cmdClimberDriveForward());
     addSequential(new cmdClimberExtend());
+    addSequential(new cgIntakeBall());
 
     // Add Commands here:
     // e.g. addSequential(new Command1());

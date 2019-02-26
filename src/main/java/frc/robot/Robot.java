@@ -104,6 +104,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("visionAngle", Robot.driveSystem.visionAngle);
     SmartDashboard.putNumber("Pot Value", Robot.elevator.elevatorPot.getAverageVoltage());
     SmartDashboard.putBoolean("IsBallMode", Robot.elevator.isBallMode());
+    SmartDashboard.putNumber("frontRight", Robot.driveSystem.frontRightMotor.getOutputCurrent());
+    SmartDashboard.putNumber("frontLeft", Robot.driveSystem.frontLeftMotor.getOutputCurrent());
+    SmartDashboard.putNumber("backRight", Robot.driveSystem.backRightMotor.getOutputCurrent());
+    SmartDashboard.putNumber("backLeft", Robot.driveSystem.backRightMotor.getOutputCurrent());
 
     double v = Robot.vision.getAngle();
     // SmartDashboard.putBoolean("optical", RobotMap.opticalFront.get());

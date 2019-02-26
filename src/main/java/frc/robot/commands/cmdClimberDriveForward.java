@@ -15,7 +15,7 @@ public class cmdClimberDriveForward extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.driveSystem);
-    setTimeout(6.0);
+    setTimeout(12.0);
   }
 
   // Called just before this Command runs the first time
@@ -27,7 +27,7 @@ public class cmdClimberDriveForward extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.climber.rangeToFloor.getRangeInches() > 20) {
+    if (Robot.climber.rangeToFloor.getRangeInches() > 4) {
       Robot.driveSystem.drive(0.3);
     } else {
       Robot.driveSystem.stop();
@@ -37,7 +37,7 @@ public class cmdClimberDriveForward extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (isTimedOut() || Robot.climber.rangeToFloor.getRangeInches() < 4.0) {
+    if (isTimedOut()/* || Robot.climber.rangeToFloor.getRangeInches() < 4.0 */) {
       return true;
     }
     return false;

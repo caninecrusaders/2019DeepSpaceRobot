@@ -40,12 +40,11 @@ public class cmdClimberExtend extends Command {
   @Override
   protected boolean isFinished() {
     double currentPitch = Robot.ahrs.getPitch();
-    if (Robot.climber.startingPitch - currentPitch > 0.5) {
+    if (Robot.climber.startingPitch - currentPitch > 0.55) {
       Robot.climber.timeExtend = Timer.getFPGATimestamp() - startTime;
-      // SmartDashboard.putNumber("lastPitch", currentPitch);
-      // SmartDashboard.putNumber("startingPitch", Robot.climber.startingPitch);
-      // SmartDashboard.putNumber("heightAtTrigger",
-      // Robot.climber.rangeToFloor.getRangeInches());
+      SmartDashboard.putNumber("lastPitch", currentPitch);
+      SmartDashboard.putNumber("startingPitch", Robot.climber.startingPitch);
+      SmartDashboard.putNumber("heightAtTrigger", Robot.climber.rangeToFloor.getRangeInches());
 
       return true;
     }

@@ -55,10 +55,10 @@ public class driveSystem extends Subsystem implements PIDOutput {
 	public Ultrasonic rangeInFront = new Ultrasonic(RobotMap.frontTriggerID, RobotMap.frontEchoID);
 	static double lastThrottleTime;
 
-	WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(RobotMap.driveFrontLeftMotorID);
-	WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(RobotMap.driveFrontRightMotorID);
-	WPI_TalonSRX backLeftMotor = new WPI_TalonSRX(RobotMap.driveBackLeftMotorID);
-	WPI_TalonSRX backRightMotor = new WPI_TalonSRX(RobotMap.driveBackRightMotorID);
+	public WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(RobotMap.driveFrontLeftMotorID);
+	public WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(RobotMap.driveFrontRightMotorID);
+	public WPI_TalonSRX backLeftMotor = new WPI_TalonSRX(RobotMap.driveBackLeftMotorID);
+	public WPI_TalonSRX backRightMotor = new WPI_TalonSRX(RobotMap.driveBackRightMotorID);
 	SpeedControllerGroup leftMotors;
 	SpeedControllerGroup rightMotors;
 	DifferentialDrive driveControl;
@@ -329,7 +329,7 @@ public class driveSystem extends Subsystem implements PIDOutput {
 	}
 
 	public void drive(double speed) {
-		driveControl.curvatureDrive(speed, 0, false);
+		driveControl.curvatureDrive(-speed, 0, false);
 
 		// frontLeftMotor.set(speed);
 		// backLeftMotor.set(speed);
