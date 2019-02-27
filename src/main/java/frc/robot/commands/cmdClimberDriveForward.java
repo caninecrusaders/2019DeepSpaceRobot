@@ -8,14 +8,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 public class cmdClimberDriveForward extends Command {
+  boolean isClimbing = false;
+
   public cmdClimberDriveForward() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.driveSystem);
-    setTimeout(12.0);
+    setTimeout(6.0);
   }
 
   // Called just before this Command runs the first time
@@ -27,8 +30,11 @@ public class cmdClimberDriveForward extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.climber.rangeToFloor.getRangeInches() > 4) {
-      Robot.driveSystem.drive(0.3);
+    if (Robot.climber.rangeToFloor.getRangeInches() > 18 && !isClimbing) {
+      isClimbing = true;
+    }
+    if (isClimbing) {
+      Robot.driveSystem.drive(0.35);
     } else {
       Robot.driveSystem.stop();
     }
@@ -37,7 +43,7 @@ public class cmdClimberDriveForward extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (isTimedOut()/* || Robot.climber.rangeToFloor.getRangeInches() < 4.0 */) {
+    if (isTimedOut()/* || (Robot.climber.rangeToFloor.getRangeInches() < 4.0 && isClimbing) */) {
       return true;
     }
     return false;
@@ -47,6 +53,8 @@ public class cmdClimberDriveForward extends Command {
   @Override
   protected void end() {
     Robot.driveSystem.stop();
+    SmartDashboard.putNumber("RangeToFloorOnPlatform", Robot.climber.rangeToFloor.getRangeInches());
+
   }
 
   // Called when another command which requires one or more of the same
