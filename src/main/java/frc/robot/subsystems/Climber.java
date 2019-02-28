@@ -33,7 +33,11 @@ public class Climber extends Subsystem {
   }
 
   public void up() {
-    climberMotor.set(0.3);
+    climberMotor.set(0.2);
+  }
+
+  public void up(double speed) {
+    climberMotor.set(speed);
   }
 
   public void down() {

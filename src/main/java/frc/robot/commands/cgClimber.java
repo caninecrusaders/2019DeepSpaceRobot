@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class cgClimber extends CommandGroup {
   /**
@@ -17,8 +18,10 @@ public class cgClimber extends CommandGroup {
     addParallel(new cmdClimberDriveForward());
     addSequential(new cmdClimberExtend());
     addSequential(new cgIntakeBall());
-    addParallel(new cmdClimberPulsingDrive());
-    addSequential(new cmdClimberRetract());
+    addSequential(new WaitCommand(1.0));
+    addParallel(new cmdClimberRetract());
+    addSequential(new cmdClimberPulsingDrive());
+    addSequential(new cmdClimberRetractSlow());
 
     // Add Commands here:
     // e.g. addSequential(new Command1());

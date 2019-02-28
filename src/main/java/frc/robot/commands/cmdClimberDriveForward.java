@@ -18,7 +18,7 @@ public class cmdClimberDriveForward extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.driveSystem);
-    setTimeout(6.0);
+    setTimeout(8.0);
   }
 
   // Called just before this Command runs the first time
@@ -34,7 +34,7 @@ public class cmdClimberDriveForward extends Command {
       isClimbing = true;
     }
     if (isClimbing) {
-      Robot.driveSystem.drive(0.35);
+      Robot.driveSystem.drive(0.5);
     } else {
       Robot.driveSystem.stop();
     }

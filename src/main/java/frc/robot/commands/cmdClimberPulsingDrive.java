@@ -20,7 +20,7 @@ public class cmdClimberPulsingDrive extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.driveSystem);
-
+    setTimeout(2.5);
   }
 
   // Called just before this Command runs the first time
@@ -35,32 +35,35 @@ public class cmdClimberPulsingDrive extends Command {
   @Override
   protected void execute() {
     double deltaTime = Timer.getFPGATimestamp() - timeStart;
-    // if (deltaTime >= 0.25) {
-    // counter++;
-    // timeStart = Timer.getFPGATimestamp();
-    // if (isMotorOn) {
-    // isMotorOn = false;
-    // } else {
-    // isMotorOn = true;
-    // }
-    // }
+    if (deltaTime >= 0.1) {
+      counter++;
+      timeStart = Timer.getFPGATimestamp();
+      if (isMotorOn) {
+        isMotorOn = false;
+      } else {
+        isMotorOn = true;
+      }
+    }
 
-    if (Robot.driveSystem.rangeInFront.getRangeInches() < 34.0) {
-      Robot.driveSystem.drive(0.3);
+    // if (Robot.driveSystem.rangeInFront.getRangeInches() < 34.0) {
+    if (isMotorOn) {
+      Robot.driveSystem.drive(0.2);
     } else {
-      Robot.driveSystem.drive(0.4);
+      Robot.driveSystem.stop();
+      ;
     }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (Robot.driveSystem.rangeInFront.getRangeInches() < 32.0
-        && (Robot.ahrs.getPitch() < 0.5 && Robot.ahrs.getPitch() > -0.5)) {
-      return true;
-    } else {
-      return false;
-    }
+    return isTimedOut();
+    // if (Robot.driveSystem.rangeInFront.getRangeInches() < 32.0
+    // && (Robot.ahrs.getPitch() < 0.02 && Robot.ahrs.getPitch() > -0.02)) {
+    // return true;
+    // } else {
+    // return false;
+    // }
   }
 
   // Called once after isFinished returns true
