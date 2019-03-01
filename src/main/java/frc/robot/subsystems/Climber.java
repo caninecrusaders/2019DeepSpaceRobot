@@ -21,6 +21,7 @@ public class Climber extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public WPI_TalonSRX climberMotor = new WPI_TalonSRX(RobotMap.climberMotorID);
+  public WPI_TalonSRX climberMotor2 = new WPI_TalonSRX(RobotMap.climberMotor2ID);
   public Ultrasonic rangeToFloor = new Ultrasonic(RobotMap.floorTriggerID, RobotMap.floorEchoID);
   public double timeExtend = 0;
   public double startingPitch = 0;
@@ -34,18 +35,22 @@ public class Climber extends Subsystem {
 
   public void up() {
     climberMotor.set(0.5);
+    // climberMotor2.set(0.5);
   }
 
   public void up(double speed) {
     climberMotor.set(speed);
+    // climberMotor2.set(speed);
   }
 
   public void down() {
     climberMotor.set(-1.0);
+    // climberMotor2.set(-1.0);
   }
 
   public void stop() {
     climberMotor.stopMotor();
+    // climberMotor2.stopMotor();
   }
 
 }
