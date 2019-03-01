@@ -108,6 +108,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("frontLeft", Robot.driveSystem.frontLeftMotor.getOutputCurrent());
     SmartDashboard.putNumber("backRight", Robot.driveSystem.backRightMotor.getOutputCurrent());
     SmartDashboard.putNumber("backLeft", Robot.driveSystem.backRightMotor.getOutputCurrent());
+    SmartDashboard.putNumber("ClimberCurrent", Robot.climber.climberMotor.getOutputCurrent());
 
     double v = Robot.vision.getAngle();
     // SmartDashboard.putBoolean("optical", RobotMap.opticalFront.get());

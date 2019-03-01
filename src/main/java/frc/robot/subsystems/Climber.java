@@ -20,7 +20,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 public class Climber extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private final WPI_TalonSRX climberMotor = new WPI_TalonSRX(RobotMap.climberMotorID);
+  public WPI_TalonSRX climberMotor = new WPI_TalonSRX(RobotMap.climberMotorID);
   public Ultrasonic rangeToFloor = new Ultrasonic(RobotMap.floorTriggerID, RobotMap.floorEchoID);
   public double timeExtend = 0;
   public double startingPitch = 0;
@@ -33,7 +33,7 @@ public class Climber extends Subsystem {
   }
 
   public void up() {
-    climberMotor.set(0.2);
+    climberMotor.set(0.5);
   }
 
   public void up(double speed) {

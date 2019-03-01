@@ -151,7 +151,7 @@ public class driveSystem extends Subsystem implements PIDOutput {
 		driveControl.curvatureDrive(throttle, -turn, false);
 		if (throttle > -.05 && throttle < 0.05 && !inVisionMode) {
 			if (Timer.getFPGATimestamp() - lastThrottleTime > 0.25) {
-				driveControl.curvatureDrive(0, -turn * 0.2, true);
+				driveControl.curvatureDrive(0, -turn * 0.3, true);
 			}
 		} else {
 			driveControl.curvatureDrive(throttle, -turn, false);

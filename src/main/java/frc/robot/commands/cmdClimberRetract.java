@@ -31,7 +31,7 @@ public class cmdClimberRetract extends Command {
     // if (Robot.ahrs.getPitch() < 0.02 && Robot.ahrs.getPitch() > -0.02) {
     // Robot.climber.stop();
     // } else {
-    Robot.climber.up();
+    Robot.climber.up(0.05);
     // }
 
   }
