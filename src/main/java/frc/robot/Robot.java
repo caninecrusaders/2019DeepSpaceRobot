@@ -18,6 +18,7 @@ import frc.robot.subsystems.*;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.cameraserver.CameraServer;
@@ -45,6 +46,7 @@ public class Robot extends TimedRobot {
   public static Climber climber;
   public static Compressor compressor;
   public static Rumble rumble;
+  public static Preferences prefs;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -116,6 +118,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
+    prefs = Preferences.getInstance();
+    if (!prefs.containsKey("Pot Calibration")) {
+      prefs.putDouble("Pot Calibration", Robot.elevator.getPotCalibration());
+    }
+    Robot.elevator.setPotCalibration(prefs.getDouble("Pot Calibration", Robot.elevator.getPotCalibration()));
   }
 
   @Override

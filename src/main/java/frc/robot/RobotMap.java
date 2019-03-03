@@ -41,6 +41,7 @@ public class RobotMap {
   public static final int elbowDownID = 3;
   public static final int elevatorPotID = 1;
   public static final int climberMotorID = 6;
+  public static final int climberMotor2ID = 9;
   public static final int intakeMotorID = 7;
   public static final int rangeFinderID = 0;
   public static final int frontTriggerID = 9;

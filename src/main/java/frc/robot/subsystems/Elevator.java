@@ -41,6 +41,7 @@ public class Elevator extends Subsystem implements PIDOutput {
   public AnalogInput elevatorPot = new AnalogInput(RobotMap.elevatorPotID);
   private final double[] potHatch = new double[] { 0.0, 1.0, 2.0, 3.0 };
   private final double[] potBall = new double[] { 0.0, 1.0, 2.0, 3.0 };
+  private double potCalibration = 0;
   private final double potGround = 0;
   private final double potHatch1 = 1;
   private final double potHatch2 = 2;
@@ -52,6 +53,14 @@ public class Elevator extends Subsystem implements PIDOutput {
   private boolean isAutoMode = false;
   private int elevatorPosition = 0;
   private static int lastDirection;
+
+  public void setPotCalibration(double potCal) {
+    potCalibration = potCal;
+  }
+
+  public double getPotCalibration() {
+    return potCalibration;
+  }
 
   public void setUpPIDController() {
     controller = new PIDController(kP, kI, kD, kF, Robot.ahrs, this);
