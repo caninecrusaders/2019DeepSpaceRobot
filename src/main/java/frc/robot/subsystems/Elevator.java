@@ -54,6 +54,18 @@ public class Elevator extends Subsystem implements PIDOutput {
   private int elevatorPosition = 0;
   private static int lastDirection;
 
+  public void enableAutoMode() {
+    if (isBallMode) {
+      enablePIDController(potBall[elevatorPosition]);
+    } else {
+      enablePIDController(potHatch[elevatorPosition]);
+    }
+  }
+
+  public void disableAutoMode() {
+    disablePIDController();
+  }
+
   public void setPotCalibration(double potCal) {
     potCalibration = potCal;
   }
@@ -63,7 +75,7 @@ public class Elevator extends Subsystem implements PIDOutput {
   }
 
   public void setUpPIDController() {
-    controller = new PIDController(kP, kI, kD, kF, Robot.ahrs, this);
+    controller = new PIDController(kP, kI, kD, kF, elevatorPot, this);
     controller.setInputRange(0, 5.0);
     controller.setOutputRange(-0.5, 0.5);
     controller.setAbsoluteTolerance(kToleranceVolts);
@@ -81,6 +93,7 @@ public class Elevator extends Subsystem implements PIDOutput {
   }
 
   public Elevator() {
+    setUpPIDController();
     LiveWindow.add(elevatorPot);
   }
 
@@ -112,6 +125,15 @@ public class Elevator extends Subsystem implements PIDOutput {
   }
 
   public void autoMode() { // make elevator motors go to position
+    // if (isBallMode) {
+    // moveElevator(3.5);
+    // moveElevator(potBall[elevatorPosition]);
+
+    // } else { // hatch
+    // moveElevator(3.5);
+    // moveElevator(potHatch[elevatorPosition]);
+
+    // }
     // if (elevatorPosition == 0) {
     // // Drive elevator to pot ground
     // moveElevator(potGround);
@@ -142,7 +164,7 @@ public class Elevator extends Subsystem implements PIDOutput {
     // }
     if (controller.onTarget()) {
       elevatorStop();
-      isAutoMode = false;
+      // isAutoMode = false;
     } else {
       elevatorMotor.set(elevatorSpeed);
     }
@@ -185,9 +207,11 @@ public class Elevator extends Subsystem implements PIDOutput {
     if (elevatorPosition < 3) {
       elevatorPosition++;
       if (isBallMode) {
-        enablePIDController(potBall[elevatorPosition]);
+        // enablePIDController(potBall[elevatorPosition]);
+        enablePIDController(3.5);
       } else {
-        enablePIDController(potHatch[elevatorPosition]);
+        // enablePIDController(potHatch[elevatorPosition]);
+        enablePIDController(3.5);
       }
     }
     SmartDashboard.putNumber("elevatorPosition", elevatorPosition);

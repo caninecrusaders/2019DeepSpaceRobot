@@ -64,10 +64,10 @@ public class OI {
 
         // controller 2
         rightBumper2 = new JoystickButton(xboxDriver2, 6);
-        rightBumper2.whileHeld(new cmdAutoUp());
+        rightBumper2.whenPressed(new cmdAutoUp());
 
         leftBumper2 = new JoystickButton(xboxDriver2, 5);
-        leftBumper2.whileHeld(new cmdAutoDown());
+        leftBumper2.whenPressed(new cmdAutoDown());
 
         bButton2 = new JoystickButton(xboxDriver2, 2);
         bButton2.whenPressed(new cmdBallMode());
