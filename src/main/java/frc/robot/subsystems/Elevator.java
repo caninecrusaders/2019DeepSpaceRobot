@@ -28,43 +28,24 @@ public class Elevator extends Subsystem implements PIDOutput {
   // here. Call these from Commands.
   PIDController controller;
   double elevatorSpeed;
-  static final double kP = 0.04;
-  static final double kI = 0.003;
-  static final double kD = 0.002;
-  static final double kF = 0.1;
-  static final double kToleranceVolts = 0.1;
+  static final double kP = 3.4;
+  static final double kI = 0.0;
+  static final double kD = 0.0;
+  static final double kF = 0.4;
+  static final double kToleranceVolts = 0.05;
   double last_world_linear_accel_x;
   double last_world_linear_accel_y;
   final static double kCollisionThreshold_DeltaG = 0.6f;
 
   private final WPI_TalonSRX elevatorMotor = new WPI_TalonSRX(RobotMap.elevatorMotorID);
   public AnalogInput elevatorPot = new AnalogInput(RobotMap.elevatorPotID);
-  private final double[] potHatch = new double[] { 0.0, 1.0, 2.0, 3.0 };
-  private final double[] potBall = new double[] { 0.0, 1.0, 2.0, 3.0 };
-  private double potCalibration = 0;
-  private final double potGround = 0;
-  private final double potHatch1 = 1;
-  private final double potHatch2 = 2;
-  private final double potHatch3 = 3;
-  private final double potBall1 = 1;
-  private final double potBall2 = 2;
-  private final double potBall3 = 3;
+  private final double[] potHatch = new double[] { 2.52, 2.52, 3.49, 4.48 };
+  private final double[] potBall = new double[] { 2.52, 2.77, 3.78, 4.68 };
+  private double potCalibration = 2.52;
   private boolean isBallMode = false;
   private boolean isAutoMode = false;
   private int elevatorPosition = 0;
   private static int lastDirection;
-
-  public void enableAutoMode() {
-    if (isBallMode) {
-      enablePIDController(potBall[elevatorPosition]);
-    } else {
-      enablePIDController(potHatch[elevatorPosition]);
-    }
-  }
-
-  public void disableAutoMode() {
-    disablePIDController();
-  }
 
   public void setPotCalibration(double potCal) {
     potCalibration = potCal;
@@ -77,14 +58,15 @@ public class Elevator extends Subsystem implements PIDOutput {
   public void setUpPIDController() {
     controller = new PIDController(kP, kI, kD, kF, elevatorPot, this);
     controller.setInputRange(0, 5.0);
-    controller.setOutputRange(-0.5, 0.5);
+    controller.setOutputRange(-0.5, 1.0);
     controller.setAbsoluteTolerance(kToleranceVolts);
     controller.setContinuous(true);
   }
 
   public void enablePIDController(double setpoint) {
+    double bias = potCalibration - potBall[0];
     controller.reset();
-    controller.setSetpoint(setpoint);
+    controller.setSetpoint(setpoint + bias);
     controller.enable();
   }
 
@@ -108,6 +90,7 @@ public class Elevator extends Subsystem implements PIDOutput {
     double up = Robot.oi.xboxDriver2.getRawAxis(3);
     if (up > 0.02 || down > 0.02) {
       isAutoMode = false;
+      elevatorPosition = 0;
     }
 
     if (isAutoMode) {
@@ -207,11 +190,9 @@ public class Elevator extends Subsystem implements PIDOutput {
     if (elevatorPosition < 3) {
       elevatorPosition++;
       if (isBallMode) {
-        // enablePIDController(potBall[elevatorPosition]);
-        enablePIDController(3.5);
+        enablePIDController(potBall[elevatorPosition] + 0.1);
       } else {
-        // enablePIDController(potHatch[elevatorPosition]);
-        enablePIDController(3.5);
+        enablePIDController(potHatch[elevatorPosition] + 0.1);
       }
     }
     SmartDashboard.putNumber("elevatorPosition", elevatorPosition);
