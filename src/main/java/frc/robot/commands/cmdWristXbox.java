@@ -21,7 +21,7 @@ public class cmdWristXbox extends Command {
     protected void initialize() {
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    // Called repeatedly when this Command is scheduled to run-
     protected void execute() {
         double intakeIn = -Robot.oi.xboxDriver2.getRawAxis(5);
         double hatchDeploy = Robot.oi.xboxDriver2.getRawAxis(1);

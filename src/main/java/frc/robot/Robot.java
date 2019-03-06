@@ -14,6 +14,10 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 //import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.cmdElbowDown;
+import frc.robot.commands.cmdElbowUp;
+import frc.robot.commands.cmdWristDown;
+import frc.robot.commands.cmdWristUp;
 import frc.robot.subsystems.*;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
@@ -93,6 +97,11 @@ public class Robot extends TimedRobot {
     rumble = new Rumble();
 
     oi = new OI(tableInstance);
+    SmartDashboard.putData(new cmdWristUp());
+    SmartDashboard.putData(new cmdWristDown());
+    SmartDashboard.putData(new cmdElbowDown());
+    SmartDashboard.putData(new cmdElbowUp());
+
   }
 
   @Override

@@ -39,9 +39,9 @@ public class Elevator extends Subsystem implements PIDOutput {
 
   private final WPI_TalonSRX elevatorMotor = new WPI_TalonSRX(RobotMap.elevatorMotorID);
   public AnalogInput elevatorPot = new AnalogInput(RobotMap.elevatorPotID);
-  private final double[] potHatch = new double[] { 2.52, 2.52, 3.49, 4.48 };
-  private final double[] potBall = new double[] { 2.52, 2.77, 3.78, 4.68 };
-  private double potCalibration = 2.52;
+  private final double[] potHatch = new double[] { 0.6, 0.476, 1.84, 3.055 };
+  private final double[] potBall = new double[] { 0.6, 0.866, 2.22, 3.21 };
+  private double potCalibration = 0.476;
   private boolean isBallMode = false;
   private boolean isAutoMode = false;
   private int elevatorPosition = 0;
@@ -108,15 +108,12 @@ public class Elevator extends Subsystem implements PIDOutput {
   }
 
   public void autoMode() { // make elevator motors go to position
-    // if (isBallMode) {
-    // moveElevator(3.5);
-    // moveElevator(potBall[elevatorPosition]);
+    if (isBallMode) {
+      moveElevator(potBall[elevatorPosition]);
 
-    // } else { // hatch
-    // moveElevator(3.5);
-    // moveElevator(potHatch[elevatorPosition]);
-
-    // }
+    } else { // hatch
+      moveElevator(potHatch[elevatorPosition]);
+    }
     // if (elevatorPosition == 0) {
     // // Drive elevator to pot ground
     // moveElevator(potGround);
@@ -145,12 +142,12 @@ public class Elevator extends Subsystem implements PIDOutput {
     // moveElevator(potBall3);
     // }
     // }
-    if (controller.onTarget()) {
-      elevatorStop();
-      // isAutoMode = false;
-    } else {
-      elevatorMotor.set(elevatorSpeed);
-    }
+    // if (controller.onTarget()) {
+    // elevatorStop();
+    // // isAutoMode = false;
+    // } else {
+    // elevatorMotor.set(elevatorSpeed);
+    // }
 
   }
 
@@ -167,7 +164,11 @@ public class Elevator extends Subsystem implements PIDOutput {
       elevatorStop();
       isAutoMode = false;
     } else {
-      elevatorMotor.set(0.5 * direction);
+      if (direction > 0) {
+        elevatorMotor.set(1.0);
+      } else {
+        elevatorMotor.set(-0.5);
+      }
     }
     lastDirection = direction;
   }
@@ -189,11 +190,11 @@ public class Elevator extends Subsystem implements PIDOutput {
     lastDirection = 0;
     if (elevatorPosition < 3) {
       elevatorPosition++;
-      if (isBallMode) {
-        enablePIDController(potBall[elevatorPosition] + 0.1);
-      } else {
-        enablePIDController(potHatch[elevatorPosition] + 0.1);
-      }
+      // if (isBallMode) {
+      // enablePIDController(potBall[elevatorPosition] + 0.1);
+      // } else {
+      // enablePIDController(potHatch[elevatorPosition] + 0.1);
+      // }
     }
     SmartDashboard.putNumber("elevatorPosition", elevatorPosition);
   }
@@ -203,16 +204,18 @@ public class Elevator extends Subsystem implements PIDOutput {
     lastDirection = 0;
     if (elevatorPosition > 0) {
       elevatorPosition--;
-      if (isBallMode) {
-        enablePIDController(potBall[elevatorPosition]);
-      } else {
-        enablePIDController(potHatch[elevatorPosition]);
-      }
+      // if (isBallMode) {
+      // enablePIDController(potBall[elevatorPosition]);
+      // } else {
+      // enablePIDController(potHatch[elevatorPosition]);
+      // }
     }
     SmartDashboard.putNumber("elevatorPosition", elevatorPosition);
   }
 
   public void elevatorAutoReset() {
+    isAutoMode = true;
+    lastDirection = 0;
     elevatorPosition = 0;
     SmartDashboard.putNumber("elevatorPosition", elevatorPosition);
   }

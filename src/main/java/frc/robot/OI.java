@@ -30,6 +30,8 @@ public class OI {
     public JoystickButton xButton;
     public JoystickButton bButton;
     public JoystickButton resetButton;
+    public JoystickButton hatchButton2;
+    public JoystickButton ballButton2;
     public NetworkTable visionTable;
     public JoystickButton leftBumper2;
     public JoystickButton rightBumper2;
@@ -70,19 +72,22 @@ public class OI {
         leftBumper2.whenPressed(new cmdAutoDown());
 
         bButton2 = new JoystickButton(xboxDriver2, 2);
-        bButton2.whenPressed(new cmdBallMode());
+        bButton2.whenPressed(new cgIntakeBall());
 
         xButton2 = new JoystickButton(xboxDriver2, 3);
-        xButton2.whenPressed(new cmdHatchMode());
+        xButton2.whenPressed(new cmdResetElevator());
 
         aButton2 = new JoystickButton(xboxDriver2, 1);
-        aButton2.whenPressed(new cmdIntakeDown());
+        aButton2.whenPressed(new cgIntakeHatch());
 
         yButton2 = new JoystickButton(xboxDriver2, 4);
         yButton2.whenPressed(new cgStartPosition());
 
-        resetButton2 = new JoystickButton(xboxDriver2, 8);
-        resetButton2.whenPressed(new cmdResetElevator());
+        ballButton2 = new JoystickButton(xboxDriver2, 8);
+        ballButton2.whenPressed(new cmdBallMode());
+
+        hatchButton2 = new JoystickButton(xboxDriver2, 7);
+        hatchButton2.whenPressed(new cmdHatchMode());
 
         // // other
         // visionTable = tableInstance.getTable("CVResultsTable");
