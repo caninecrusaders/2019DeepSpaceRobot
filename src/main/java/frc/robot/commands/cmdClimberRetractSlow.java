@@ -15,6 +15,7 @@ public class cmdClimberRetractSlow extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.climber);
+    requires(Robot.driveSystem);
     setTimeout(1.0);
   }
 
@@ -26,7 +27,8 @@ public class cmdClimberRetractSlow extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.climber.up(0.05);
+    Robot.climber.up(0.3);
+    Robot.driveSystem.drive(0.1);
   }
 
   // Make this return true when this Command no longer needs to run execute()

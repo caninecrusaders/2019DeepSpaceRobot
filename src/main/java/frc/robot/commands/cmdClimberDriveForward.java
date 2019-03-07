@@ -34,7 +34,7 @@ public class cmdClimberDriveForward extends Command {
       isClimbing = true;
     }
     if (isClimbing) {
-      Robot.driveSystem.drive(0.5);
+      Robot.driveSystem.drive(0.6);
     } else {
       Robot.driveSystem.stop();
     }

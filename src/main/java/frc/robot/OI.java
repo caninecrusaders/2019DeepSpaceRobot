@@ -30,6 +30,7 @@ public class OI {
     public JoystickButton xButton;
     public JoystickButton bButton;
     public JoystickButton resetButton;
+    public JoystickButton cancelClimbButton;
     public JoystickButton hatchButton2;
     public JoystickButton ballButton2;
     public NetworkTable visionTable;
@@ -55,8 +56,11 @@ public class OI {
         leftBumper = new JoystickButton(xboxDriver, 5);
         leftBumper.whileHeld(new cmdClimberLegIn());
 
-        resetButton = new JoystickButton(xboxDriver, 8);
+        resetButton = new JoystickButton(xboxDriver, 7);
         resetButton.whenPressed(new cmdResetGyro());
+
+        cancelClimbButton = new JoystickButton(xboxDriver, 8);
+        cancelClimbButton.whenPressed(new cmdCancelClimber());
 
         yButton = new JoystickButton(xboxDriver, 4);
         yButton.whenPressed(new cgClimber());
