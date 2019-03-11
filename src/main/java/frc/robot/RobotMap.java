@@ -51,6 +51,8 @@ public class RobotMap {
   public static final int hatchExtendID = 7;
   public static final int hatchRetractID = 6;
   public static final int hatchModuleID = 1;
+  public static final int backEchoID = 5;
+  public static final int backTriggerID = 4;
 
   public static void init() {
 

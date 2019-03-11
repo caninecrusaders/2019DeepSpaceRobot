@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class cgIntakeBall extends CommandGroup {
   /**
@@ -15,8 +16,9 @@ public class cgIntakeBall extends CommandGroup {
    */
   public cgIntakeBall() {
     // Add Commands here:
-    addSequential(new cmdWristDown());
     addSequential(new cmdElbowDown());
+    addSequential(new WaitCommand(0.6));
+    addSequential(new cmdWristDown());
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.

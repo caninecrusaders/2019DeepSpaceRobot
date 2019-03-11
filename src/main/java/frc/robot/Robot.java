@@ -109,6 +109,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("RangeFinder", Robot.wrist.rangeFinder.getAverageVoltage());
     SmartDashboard.putNumber("RangeToFloor", Robot.climber.rangeToFloor.getRangeInches());
     SmartDashboard.putNumber("RangeInFront", Robot.driveSystem.rangeInFront.getRangeInches());
+    SmartDashboard.putNumber("RangeInBack", Robot.driveSystem.rangeInBack.getRangeInches());
+    SmartDashboard.putNumber("Camera Pitch", Robot.vision.pitch);
+    SmartDashboard.putNumber("Camera Yaw", Robot.vision.yaw);
     SmartDashboard.putNumber("YAw", ahrs.getYaw());
     SmartDashboard.putNumber("Pitch", ahrs.getPitch());
     SmartDashboard.putNumber("Roll", ahrs.getRoll());

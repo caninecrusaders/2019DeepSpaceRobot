@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import frc.robot.OI;
 import frc.robot.Robot;
-
+import frc.robot.commands.cmdVisionXbox;
 import edu.wpi.first.networktables.EntryListenerFlags;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -10,6 +10,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableValue;
 import edu.wpi.first.networktables.TableEntryListener;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -21,6 +22,10 @@ public class Vision extends Subsystem implements TableEntryListener {
     int index = 0;
     public NetworkTable visionTable;
     public NetworkTableInstance tableInstance;
+    public Servo CameraYaw = new Servo(0);
+    public Servo CameraPitch = new Servo(1);
+    public double yaw = 0.27;
+    public double pitch = 0.83;
     // public NetworkTable filterTable;
     double h;
     double s;
@@ -85,6 +90,7 @@ public class Vision extends Subsystem implements TableEntryListener {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new cmdVisionXbox());
     }
 
     public void incrementFilter() {
@@ -139,5 +145,23 @@ public class Vision extends Subsystem implements TableEntryListener {
         Robot.driveSystem.isVisionAngleValid = true;
         SmartDashboard.putString("VisionAngle", values[1]);
 
+    }
+
+    public void visionControl() {
+        // double ServoPitch = Robot.oi.xboxDriver.getRawAxis(5);
+        // double ServoYaw = Robot.oi.xboxDriver.getRawAxis(0);
+
+        // if (ServoYaw > 0.5) {
+        // yaw += 0.01;
+        // } else if (ServoYaw < -0.5) {
+        // yaw -= 0.01;
+        // }
+        // if (ServoPitch > 0.5) {
+        // pitch += 0.01;
+        // } else if (ServoPitch < -0.5) {
+        // pitch -= 0.01;
+        // }
+        CameraYaw.set(yaw);
+        CameraPitch.set(pitch);
     }
 }

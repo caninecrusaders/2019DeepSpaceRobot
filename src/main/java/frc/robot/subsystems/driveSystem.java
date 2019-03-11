@@ -53,6 +53,7 @@ public class driveSystem extends Subsystem implements PIDOutput {
 	double last_world_linear_accel_y;
 	final static double kCollisionThreshold_DeltaG = 0.6f;
 	public Ultrasonic rangeInFront = new Ultrasonic(RobotMap.frontTriggerID, RobotMap.frontEchoID);
+	public Ultrasonic rangeInBack = new Ultrasonic(RobotMap.backTriggerID, RobotMap.backEchoID);
 	static double lastThrottleTime;
 
 	public WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(RobotMap.driveFrontLeftMotorID);
@@ -149,9 +150,9 @@ public class driveSystem extends Subsystem implements PIDOutput {
 			}
 		}
 		driveControl.curvatureDrive(throttle, -turn, false);
-		if (throttle > -.05 && throttle < 0.05 && !inVisionMode) {
+		if (throttle > -.1 && throttle < 0.1 && !inVisionMode) {
 			if (Timer.getFPGATimestamp() - lastThrottleTime > 0.25) {
-				driveControl.curvatureDrive(0, -turn * 0.5, true);
+				driveControl.curvatureDrive(0, -turn * 0.6, true);
 			}
 		} else {
 			driveControl.curvatureDrive(throttle, -turn, false);
