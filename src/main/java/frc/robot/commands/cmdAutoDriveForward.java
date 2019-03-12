@@ -10,15 +10,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class cmdElevatorUp extends Command {
-  private double speed;
+public class cmdAutoDriveForward extends Command {
+  double angle;
 
-  public cmdElevatorUp(double timeOutS, double speedIn) {
-    requires(Robot.elevator);
-    speed = speedIn;
-    setTimeout(timeOutS);
+  public cmdAutoDriveForward(double timeOut, double driveToAngle) {
     // Use requires() here to declare subsystem dependencies
-    // requires();
+    // eg. requires(chassis);
+    angle = driveToAngle;
+    requires(Robot.driveSystem);
+    setTimeout(timeOut);
   }
 
   // Called just before this Command runs the first time
@@ -29,7 +29,7 @@ public class cmdElevatorUp extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.elevator.elevatorUp(speed);
+    Robot.driveSystem.driveForward(0.5, angle);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -41,12 +41,14 @@ public class cmdElevatorUp extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.elevator.elevatorUp(0);
+    Robot.driveSystem.stop();
+    // Robot.driveSystem.disablePIDController();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

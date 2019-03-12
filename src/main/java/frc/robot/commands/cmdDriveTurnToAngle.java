@@ -20,7 +20,8 @@ public class cmdDriveTurnToAngle extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        Robot.driveSystem.setUpPIDController();
+        // Robot.driveSystem.setUpPIDController();
+        Robot.driveSystem.enablePIDController(toAngle);
         Robot.driveSystem.rotateToAngle(toAngle);
         // Robot.driveSystem.enablePIDController();
     }

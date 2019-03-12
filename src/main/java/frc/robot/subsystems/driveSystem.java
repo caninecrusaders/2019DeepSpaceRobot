@@ -346,4 +346,13 @@ public class driveSystem extends Subsystem implements PIDOutput {
 		// frontRightMotor.set(0);
 		// backRightMotor.set(0);
 	}
+
+	public void driveForward(double speed, double angle) {
+		if (!isRotating) {
+			enablePIDController(angle);
+			isRotating = true;
+		}
+		driveControl.curvatureDrive(-speed, -rotateToAngleRate, true);
+	}
+
 }

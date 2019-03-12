@@ -32,7 +32,8 @@ public class Wrist extends Subsystem {
   private final WPI_TalonSRX intakeMotor = new WPI_TalonSRX(RobotMap.intakeMotorID);
   private boolean WristDown = false;
   private boolean WristUp = true;
-  public final AnalogInput rangeFinder = new AnalogInput(RobotMap.rangeFinderID);
+  // public final AnalogInput rangeFinder = new
+  // AnalogInput(RobotMap.rangeFinderID);
 
   @Override
   public void initDefaultCommand() {

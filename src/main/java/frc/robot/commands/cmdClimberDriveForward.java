@@ -53,7 +53,8 @@ public class cmdClimberDriveForward extends Command {
   @Override
   protected void end() {
     Robot.driveSystem.stop();
-    SmartDashboard.putNumber("RangeToFloorOnPlatform", Robot.climber.rangeToFloor.getRangeInches());
+    // SmartDashboard.putNumber("RangeToFloorOnPlatform",
+    // Robot.climber.rangeToFloor.getRangeInches());
 
   }
 

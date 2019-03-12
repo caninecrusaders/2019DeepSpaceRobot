@@ -9,11 +9,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.command.Command;
 //import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 //import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.cgAutoRocket;
+import frc.robot.commands.cmdAutoDriveForward;
 import frc.robot.commands.cmdElbowDown;
 import frc.robot.commands.cmdElbowUp;
 import frc.robot.commands.cmdWristDown;
@@ -28,6 +32,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.EntryListenerFlags;
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Compressor;
 
@@ -51,6 +56,9 @@ public class Robot extends TimedRobot {
   public static Compressor compressor;
   public static Rumble rumble;
   public static Preferences prefs;
+  NetworkTableEntry nteRangeInFront;
+  NetworkTableEntry ntePotValue;
+  Command autoCommand;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -58,6 +66,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+
     RobotMap.init();
     try {
       ahrs = new AHRS(SPI.Port.kMXP);
@@ -102,27 +111,37 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData(new cmdElbowDown());
     SmartDashboard.putData(new cmdElbowUp());
 
+    nteRangeInFront = Shuffleboard.getTab("Setup").add("RangeInFront", Robot.driveSystem.rangeInFront.getRangeInches())
+        .getEntry();
+    Shuffleboard.getTab("Setup").add("RangeInBack", Robot.driveSystem.rangeInBack.getRangeInches());
+    Shuffleboard.getTab("Setup").add("Camera Pitch", Robot.vision.pitch);
+    Shuffleboard.getTab("Setup").add("Camera Yaw", Robot.vision.yaw);
+    Shuffleboard.getTab("Setup").add("YAw", ahrs.getYaw());
+    Shuffleboard.getTab("Setup").add("Pitch", ahrs.getPitch());
+    Shuffleboard.getTab("Setup").add("Roll", ahrs.getRoll());
+    Shuffleboard.getTab("Setup").add("visionAngle", Robot.driveSystem.visionAngle);
+    ntePotValue = Shuffleboard.getTab("Setup").add("Pot Value", Robot.elevator.elevatorPot.getAverageVoltage())
+        .getEntry();
+    SmartDashboard.putBoolean("IsBallMode", Robot.elevator.isBallMode());
+    Shuffleboard.getTab("Setup").add("frontRight", Robot.driveSystem.frontRightMotor.getOutputCurrent());
+    Shuffleboard.getTab("Setup").add("frontLeft", Robot.driveSystem.frontLeftMotor.getOutputCurrent());
+    Shuffleboard.getTab("Setup").add("backRight", Robot.driveSystem.backRightMotor.getOutputCurrent());
+    Shuffleboard.getTab("Setup").add("backLeft", Robot.driveSystem.backRightMotor.getOutputCurrent());
+    Shuffleboard.getTab("Setup").add("ClimberCurrent", Robot.climber.climberMotor.getOutputCurrent());
+
   }
 
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putNumber("RangeFinder", Robot.wrist.rangeFinder.getAverageVoltage());
-    SmartDashboard.putNumber("RangeToFloor", Robot.climber.rangeToFloor.getRangeInches());
-    SmartDashboard.putNumber("RangeInFront", Robot.driveSystem.rangeInFront.getRangeInches());
-    SmartDashboard.putNumber("RangeInBack", Robot.driveSystem.rangeInBack.getRangeInches());
-    SmartDashboard.putNumber("Camera Pitch", Robot.vision.pitch);
-    SmartDashboard.putNumber("Camera Yaw", Robot.vision.yaw);
-    SmartDashboard.putNumber("YAw", ahrs.getYaw());
-    SmartDashboard.putNumber("Pitch", ahrs.getPitch());
-    SmartDashboard.putNumber("Roll", ahrs.getRoll());
-    SmartDashboard.putNumber("visionAngle", Robot.driveSystem.visionAngle);
-    SmartDashboard.putNumber("Pot Value", Robot.elevator.elevatorPot.getAverageVoltage());
-    SmartDashboard.putBoolean("IsBallMode", Robot.elevator.isBallMode());
-    SmartDashboard.putNumber("frontRight", Robot.driveSystem.frontRightMotor.getOutputCurrent());
-    SmartDashboard.putNumber("frontLeft", Robot.driveSystem.frontLeftMotor.getOutputCurrent());
-    SmartDashboard.putNumber("backRight", Robot.driveSystem.backRightMotor.getOutputCurrent());
-    SmartDashboard.putNumber("backLeft", Robot.driveSystem.backRightMotor.getOutputCurrent());
-    SmartDashboard.putNumber("ClimberCurrent", Robot.climber.climberMotor.getOutputCurrent());
+    // Shuffleboard.getTab("Setup").add("RangeFinder",
+    // Robot.wrist.rangeFinder.getAverageVoltage());
+    // SmartDashboard.putNumber("RangeFinder",
+    // Robot.wrist.rangeFinder.getAverageVoltage());
+    // Shuffleboard.getTab("Setup").add("RangeToFloor",
+    // Robot.climber.rangeToFloor.getRangeInches());
+
+    nteRangeInFront.setDouble(Robot.driveSystem.rangeInFront.getRangeInches());
+    ntePotValue.setDouble(Robot.elevator.elevatorPot.getAverageVoltage());
 
     double v = Robot.vision.getAngle();
     // SmartDashboard.putBoolean("optical", RobotMap.opticalFront.get());
@@ -157,6 +176,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    autoCommand = new cgAutoRocket();
+    autoCommand.start();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
