@@ -14,9 +14,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 //import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.cgAutoRocket;
+import frc.robot.commands.cgAutoRocketLeft;
+import frc.robot.commands.cgAutoRocketRight;
+import frc.robot.commands.cgAutoShipMiddle;
 import frc.robot.commands.cmdAutoDriveForward;
 import frc.robot.commands.cmdElbowDown;
 import frc.robot.commands.cmdElbowUp;
@@ -58,7 +61,10 @@ public class Robot extends TimedRobot {
   public static Preferences prefs;
   NetworkTableEntry nteRangeInFront;
   NetworkTableEntry ntePotValue;
+  NetworkTableEntry nteCameraYaw;
+  NetworkTableEntry nteCameraPitch;
   Command autoCommand;
+  SendableChooser<Command> chooser = new SendableChooser<Command>();
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -114,8 +120,8 @@ public class Robot extends TimedRobot {
     nteRangeInFront = Shuffleboard.getTab("Setup").add("RangeInFront", Robot.driveSystem.rangeInFront.getRangeInches())
         .getEntry();
     Shuffleboard.getTab("Setup").add("RangeInBack", Robot.driveSystem.rangeInBack.getRangeInches());
-    Shuffleboard.getTab("Setup").add("Camera Pitch", Robot.vision.pitch);
-    Shuffleboard.getTab("Setup").add("Camera Yaw", Robot.vision.yaw);
+    nteCameraPitch = Shuffleboard.getTab("Setup").add("Camera Pitch", Robot.vision.pitch).getEntry();
+    nteCameraYaw = Shuffleboard.getTab("Setup").add("Camera Yaw", Robot.vision.yaw).getEntry();
     Shuffleboard.getTab("Setup").add("YAw", ahrs.getYaw());
     Shuffleboard.getTab("Setup").add("Pitch", ahrs.getPitch());
     Shuffleboard.getTab("Setup").add("Roll", ahrs.getRoll());
@@ -129,6 +135,12 @@ public class Robot extends TimedRobot {
     Shuffleboard.getTab("Setup").add("backLeft", Robot.driveSystem.backRightMotor.getOutputCurrent());
     Shuffleboard.getTab("Setup").add("ClimberCurrent", Robot.climber.climberMotor.getOutputCurrent());
 
+    chooser.setDefaultOption("Rocket left -1", new cgAutoRocketLeft(1.0));
+    chooser.addOption("Rocket left -2", new cgAutoRocketLeft(1.6));
+    chooser.addOption("Rocket Right -1", new cgAutoRocketRight(1.5));
+    chooser.addOption("Rocket Right -2", new cgAutoRocketRight(1.6));
+    chooser.addOption("Ship Middle -1", new cgAutoShipMiddle());
+    SmartDashboard.putData("Auto mode", chooser);
   }
 
   @Override
@@ -142,6 +154,8 @@ public class Robot extends TimedRobot {
 
     nteRangeInFront.setDouble(Robot.driveSystem.rangeInFront.getRangeInches());
     ntePotValue.setDouble(Robot.elevator.elevatorPot.getAverageVoltage());
+    nteCameraPitch.setDouble(Robot.vision.pitch);
+    nteCameraYaw.setDouble(Robot.vision.yaw);
 
     double v = Robot.vision.getAngle();
     // SmartDashboard.putBoolean("optical", RobotMap.opticalFront.get());
@@ -176,8 +190,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    autoCommand = new cgAutoRocket();
+    autoCommand = chooser.getSelected();
     autoCommand.start();
+    // autoCommand = new cgAutoRocketLeft();
+    // autoCommand.start();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
@@ -200,6 +216,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    if (autoCommand != null) {
+      autoCommand.cancel();
+    }
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove

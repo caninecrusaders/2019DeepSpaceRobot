@@ -9,16 +9,15 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class cgAutoRocket extends CommandGroup {
+public class cgAutoRocketRight extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public cgAutoRocket() {
-    addParallel(new cmdElevatorUp(0.2, 1.0));
-    addSequential(new cmdAutoDriveForward(1.6, 0));
+  public cgAutoRocketRight(double forwardTime) {
+    addParallel(new cmdElevatorUp(0.1, 1.0));
+    addSequential(new cmdAutoDriveForward(forwardTime, 0));
     // addSequential(new cmdDriveTurnToAngle(2, 90));
-    addSequential(new cmdAutoDriveForward(0.5, 90));
-
+    addSequential(new cmdAutoDriveForward(1.3, 45));
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
