@@ -63,6 +63,8 @@ public class Robot extends TimedRobot {
   NetworkTableEntry ntePotValue;
   NetworkTableEntry nteCameraYaw;
   NetworkTableEntry nteCameraPitch;
+  NetworkTableEntry nteVisionAngle;
+  NetworkTableEntry nteYaw;
   Command autoCommand;
   SendableChooser<Command> chooser = new SendableChooser<Command>();
 
@@ -122,10 +124,10 @@ public class Robot extends TimedRobot {
     Shuffleboard.getTab("Setup").add("RangeInBack", Robot.driveSystem.rangeInBack.getRangeInches());
     nteCameraPitch = Shuffleboard.getTab("Setup").add("Camera Pitch", Robot.vision.pitch).getEntry();
     nteCameraYaw = Shuffleboard.getTab("Setup").add("Camera Yaw", Robot.vision.yaw).getEntry();
-    Shuffleboard.getTab("Setup").add("YAw", ahrs.getYaw());
+    nteYaw = Shuffleboard.getTab("Setup").add("YAw", ahrs.getYaw()).getEntry();
     Shuffleboard.getTab("Setup").add("Pitch", ahrs.getPitch());
     Shuffleboard.getTab("Setup").add("Roll", ahrs.getRoll());
-    Shuffleboard.getTab("Setup").add("visionAngle", Robot.driveSystem.visionAngle);
+    nteVisionAngle = Shuffleboard.getTab("Setup").add("visionAngle", Robot.driveSystem.visionAngle).getEntry();
     ntePotValue = Shuffleboard.getTab("Setup").add("Pot Value", Robot.elevator.elevatorPot.getAverageVoltage())
         .getEntry();
     SmartDashboard.putBoolean("IsBallMode", Robot.elevator.isBallMode());
@@ -156,6 +158,8 @@ public class Robot extends TimedRobot {
     ntePotValue.setDouble(Robot.elevator.elevatorPot.getAverageVoltage());
     nteCameraPitch.setDouble(Robot.vision.pitch);
     nteCameraYaw.setDouble(Robot.vision.yaw);
+    nteVisionAngle.setDouble(Robot.driveSystem.visionAngle);
+    nteYaw.setDouble(ahrs.getYaw());
 
     double v = Robot.vision.getAngle();
     // SmartDashboard.putBoolean("optical", RobotMap.opticalFront.get());

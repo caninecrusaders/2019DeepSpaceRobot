@@ -53,6 +53,9 @@ public class RobotMap {
   public static final int hatchModuleID = 1;
   public static final int backEchoID = 5;
   public static final int backTriggerID = 4;
+  public static final int climberModuleID = 1;
+  public static final int climberFootExtendID = 4;
+  public static final int climberFootRetractID = 5;
 
   public static void init() {
 

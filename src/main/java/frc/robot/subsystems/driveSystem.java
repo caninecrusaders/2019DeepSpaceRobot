@@ -144,12 +144,14 @@ public class driveSystem extends Subsystem implements PIDOutput {
 		// check to see if were in vision mode
 		if (inVisionMode) {
 			if (isVisionAngleValid) {
-				turn = Math.copySign(0.5, visionAngle);
+				turn = Math.abs(visionAngle) / 160.0;
+				turn = Math.min(turn, 1.0);
+				turn = Math.copySign(turn, visionAngle);
 			} else {
 				turn = 0;
 			}
 		}
-		driveControl.curvatureDrive(throttle, -turn, false);
+		// driveControl.curvatureDrive(throttle, -turn, false);
 		if (throttle > -.1 && throttle < 0.1 && !inVisionMode) {
 			if (Timer.getFPGATimestamp() - lastThrottleTime > 0.25) {
 				driveControl.curvatureDrive(0, -turn * 0.6, true);

@@ -7,7 +7,9 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.cmdClimberXbox;
@@ -23,8 +25,18 @@ public class Climber extends Subsystem {
   public WPI_TalonSRX climberMotor = new WPI_TalonSRX(RobotMap.climberMotorID);
   public WPI_TalonSRX climberMotor2 = new WPI_TalonSRX(RobotMap.climberMotor2ID);
   public Ultrasonic rangeToFloor = new Ultrasonic(RobotMap.floorTriggerID, RobotMap.floorEchoID);
+  public DoubleSolenoid climberTrigger = new DoubleSolenoid(RobotMap.climberModuleID, RobotMap.climberFootExtendID,
+      RobotMap.climberFootRetractID);
   public double timeExtend = 0;
   public double startingPitch = 0;
+
+  public Climber() {
+    climberTrigger.set(Value.kForward);
+  }
+
+  public void triggerFoot() {
+    climberTrigger.set(Value.kReverse);
+  }
 
   @Override
   public void initDefaultCommand() {
