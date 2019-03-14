@@ -21,6 +21,8 @@ import frc.robot.commands.cgAutoRocketLeft;
 import frc.robot.commands.cgAutoRocketRight;
 import frc.robot.commands.cgAutoShipMiddle;
 import frc.robot.commands.cmdAutoDriveForward;
+import frc.robot.commands.cmdAutoNothing;
+import frc.robot.commands.cmdClimberTrigger;
 import frc.robot.commands.cmdElbowDown;
 import frc.robot.commands.cmdElbowUp;
 import frc.robot.commands.cmdWristDown;
@@ -59,14 +61,24 @@ public class Robot extends TimedRobot {
   public static Compressor compressor;
   public static Rumble rumble;
   public static Preferences prefs;
+
+  Command autoCommand;
+  SendableChooser<Command> chooser = new SendableChooser<Command>();
+
   NetworkTableEntry nteRangeInFront;
   NetworkTableEntry ntePotValue;
   NetworkTableEntry nteCameraYaw;
   NetworkTableEntry nteCameraPitch;
   NetworkTableEntry nteVisionAngle;
   NetworkTableEntry nteYaw;
-  Command autoCommand;
-  SendableChooser<Command> chooser = new SendableChooser<Command>();
+  NetworkTableEntry nteRangeInBack;
+  NetworkTableEntry ntePitch;
+  NetworkTableEntry nteRoll;
+  NetworkTableEntry nteFrontRight;
+  NetworkTableEntry nteFrontLeft;
+  NetworkTableEntry nteBackRight;
+  NetworkTableEntry nteBackLeft;
+  NetworkTableEntry nteClimberCurrent;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -114,45 +126,51 @@ public class Robot extends TimedRobot {
     rumble = new Rumble();
 
     oi = new OI(tableInstance);
-    SmartDashboard.putData(new cmdWristUp());
-    SmartDashboard.putData(new cmdWristDown());
-    SmartDashboard.putData(new cmdElbowDown());
-    SmartDashboard.putData(new cmdElbowUp());
 
-    nteRangeInFront = Shuffleboard.getTab("Setup").add("RangeInFront", Robot.driveSystem.rangeInFront.getRangeInches())
-        .getEntry();
-    Shuffleboard.getTab("Setup").add("RangeInBack", Robot.driveSystem.rangeInBack.getRangeInches());
-    nteCameraPitch = Shuffleboard.getTab("Setup").add("Camera Pitch", Robot.vision.pitch).getEntry();
-    nteCameraYaw = Shuffleboard.getTab("Setup").add("Camera Yaw", Robot.vision.yaw).getEntry();
-    nteYaw = Shuffleboard.getTab("Setup").add("YAw", ahrs.getYaw()).getEntry();
-    Shuffleboard.getTab("Setup").add("Pitch", ahrs.getPitch());
-    Shuffleboard.getTab("Setup").add("Roll", ahrs.getRoll());
-    nteVisionAngle = Shuffleboard.getTab("Setup").add("visionAngle", Robot.driveSystem.visionAngle).getEntry();
-    ntePotValue = Shuffleboard.getTab("Setup").add("Pot Value", Robot.elevator.elevatorPot.getAverageVoltage())
-        .getEntry();
+    // On shuffleboard when first opened
     SmartDashboard.putBoolean("IsBallMode", Robot.elevator.isBallMode());
-    Shuffleboard.getTab("Setup").add("frontRight", Robot.driveSystem.frontRightMotor.getOutputCurrent());
-    Shuffleboard.getTab("Setup").add("frontLeft", Robot.driveSystem.frontLeftMotor.getOutputCurrent());
-    Shuffleboard.getTab("Setup").add("backRight", Robot.driveSystem.backRightMotor.getOutputCurrent());
-    Shuffleboard.getTab("Setup").add("backLeft", Robot.driveSystem.backRightMotor.getOutputCurrent());
-    Shuffleboard.getTab("Setup").add("ClimberCurrent", Robot.climber.climberMotor.getOutputCurrent());
-
+    SmartDashboard.putData("Auto mode", chooser);
     chooser.setDefaultOption("Rocket left -1", new cgAutoRocketLeft(1.0));
     chooser.addOption("Rocket left -2", new cgAutoRocketLeft(1.6));
     chooser.addOption("Rocket Right -1", new cgAutoRocketRight(1.5));
     chooser.addOption("Rocket Right -2", new cgAutoRocketRight(1.6));
     chooser.addOption("Ship Middle -1", new cgAutoShipMiddle());
-    SmartDashboard.putData("Auto mode", chooser);
+    chooser.addOption("Do Nothing", new cmdAutoNothing());
+
+    SmartDashboard.putData(new cmdWristUp());
+    SmartDashboard.putData(new cmdWristDown());
+    SmartDashboard.putData(new cmdElbowDown());
+    SmartDashboard.putData(new cmdElbowUp());
+    SmartDashboard.putData(new cmdClimberTrigger());
+
+    // On the tab setup
+    nteRangeInFront = Shuffleboard.getTab("Setup").add("RangeInFront", Robot.driveSystem.rangeInFront.getRangeInches())
+        .getEntry();
+    nteRangeInBack = Shuffleboard.getTab("Setup").add("RangeInBack", Robot.driveSystem.rangeInBack.getRangeInches())
+        .getEntry();
+    nteCameraPitch = Shuffleboard.getTab("Setup").add("Camera Pitch", Robot.vision.pitch).getEntry();
+    nteCameraYaw = Shuffleboard.getTab("Setup").add("Camera Yaw", Robot.vision.yaw).getEntry();
+    nteYaw = Shuffleboard.getTab("Setup").add("Yaw", ahrs.getYaw()).getEntry();
+    ntePitch = Shuffleboard.getTab("Setup").add("Pitch", ahrs.getPitch()).getEntry();
+    nteRoll = Shuffleboard.getTab("Setup").add("Roll", ahrs.getRoll()).getEntry();
+    nteVisionAngle = Shuffleboard.getTab("Setup").add("Vision Angle", Robot.driveSystem.visionAngle).getEntry();
+    ntePotValue = Shuffleboard.getTab("Setup").add("Pot Value", Robot.elevator.elevatorPot.getAverageVoltage())
+        .getEntry();
+    nteFrontRight = Shuffleboard.getTab("Setup").add("frontRight", Robot.driveSystem.frontRightMotor.getOutputCurrent())
+        .getEntry();
+    nteFrontLeft = Shuffleboard.getTab("Setup").add("frontLeft", Robot.driveSystem.frontLeftMotor.getOutputCurrent())
+        .getEntry();
+    nteBackRight = Shuffleboard.getTab("Setup").add("backRight", Robot.driveSystem.backRightMotor.getOutputCurrent())
+        .getEntry();
+    nteBackLeft = Shuffleboard.getTab("Setup").add("backLeft", Robot.driveSystem.backRightMotor.getOutputCurrent())
+        .getEntry();
+    nteClimberCurrent = Shuffleboard.getTab("Setup")
+        .add("ClimberCurrent", Robot.climber.climberMotor.getOutputCurrent()).getEntry();
+
   }
 
   @Override
   public void robotPeriodic() {
-    // Shuffleboard.getTab("Setup").add("RangeFinder",
-    // Robot.wrist.rangeFinder.getAverageVoltage());
-    // SmartDashboard.putNumber("RangeFinder",
-    // Robot.wrist.rangeFinder.getAverageVoltage());
-    // Shuffleboard.getTab("Setup").add("RangeToFloor",
-    // Robot.climber.rangeToFloor.getRangeInches());
 
     nteRangeInFront.setDouble(Robot.driveSystem.rangeInFront.getRangeInches());
     ntePotValue.setDouble(Robot.elevator.elevatorPot.getAverageVoltage());
@@ -160,8 +178,15 @@ public class Robot extends TimedRobot {
     nteCameraYaw.setDouble(Robot.vision.yaw);
     nteVisionAngle.setDouble(Robot.driveSystem.visionAngle);
     nteYaw.setDouble(ahrs.getYaw());
+    nteRangeInBack.setDouble(Robot.driveSystem.rangeInBack.getRangeInches());
+    ntePitch.setDouble(ahrs.getPitch());
+    nteRoll.setDouble(ahrs.getRoll());
+    nteBackLeft.setDouble(Robot.driveSystem.backLeftMotor.getOutputCurrent());
+    nteBackRight.setDouble(Robot.driveSystem.backRightMotor.getOutputCurrent());
+    nteFrontLeft.setDouble(Robot.driveSystem.frontLeftMotor.getOutputCurrent());
+    nteFrontRight.setDouble(Robot.driveSystem.frontRightMotor.getOutputCurrent());
 
-    double v = Robot.vision.getAngle();
+    // double v = Robot.vision.getAngle();
     // SmartDashboard.putBoolean("optical", RobotMap.opticalFront.get());
   }
 

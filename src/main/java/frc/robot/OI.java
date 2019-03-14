@@ -63,10 +63,13 @@ public class OI {
         cancelClimbButton.whenPressed(new cmdCancelClimber());
 
         yButton = new JoystickButton(xboxDriver, 4);
-        yButton.whenPressed(new cgClimber());
+        yButton.whenPressed(new cgClimberLvl3());
 
         aButton = new JoystickButton(xboxDriver, 1);
         aButton.whileHeld(new cmdVisionMode());
+
+        xButton = new JoystickButton(xboxDriver, 3);
+        xButton.whileHeld(new cgClimberLvl2());
 
         // controller 2
         rightBumper2 = new JoystickButton(xboxDriver2, 6);

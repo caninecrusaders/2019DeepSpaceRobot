@@ -8,27 +8,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class cgClimber extends CommandGroup {
+public class cgClimberLvl2 extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public cgClimber() {
-    // climbing with belt
-    // addParallel(new cmdClimberDriveForward());
-    // addSequential(new cmdClimberExtend());
-    // addSequential(new cgIntakeBall());
-    // // addSequential(new WaitCommand(1.0));
-    // addParallel(new cmdClimberRetract());
-    // addSequential(new cmdClimberPulsingDrive());
-    // addSequential(new cmdClimberRetractSlow());
-
-    // climbing with trigger
+  public cgClimberLvl2() {
     addParallel(new cmdClimberDriveForward());
-    addSequential(new cmdClimberExtend());
+    addSequential(new cmdClimberExtendToHeight(12));
+    addSequential(new cmdClimberTrigger());
     addSequential(new cgIntakeBall());
-    addParallel(new cmdClimberRetract());
+    addSequential(new cmdClimberRetract(1.0));
     addSequential(new cmdClimberPulsingDrive());
     addSequential(new cmdClimberRetractSlow());
 
