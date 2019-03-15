@@ -38,6 +38,10 @@ public class Climber extends Subsystem {
     climberTrigger.set(Value.kReverse);
   }
 
+  public void triggerReset() {
+    climberTrigger.set(Value.kForward);
+  }
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
