@@ -22,6 +22,7 @@ import frc.robot.commands.cgAutoRocketRight;
 import frc.robot.commands.cgAutoShipMiddle;
 import frc.robot.commands.cmdAutoDriveForward;
 import frc.robot.commands.cmdAutoNothing;
+import frc.robot.commands.cmdClimberExtend;
 import frc.robot.commands.cmdClimberTrigger;
 import frc.robot.commands.cmdElbowDown;
 import frc.robot.commands.cmdElbowUp;
@@ -79,6 +80,7 @@ public class Robot extends TimedRobot {
   NetworkTableEntry nteBackRight;
   NetworkTableEntry nteBackLeft;
   NetworkTableEntry nteClimberCurrent;
+  NetworkTableEntry nteRangeToFloor;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -128,11 +130,10 @@ public class Robot extends TimedRobot {
     oi = new OI(tableInstance);
 
     // On shuffleboard when first opened
-    SmartDashboard.putBoolean("IsBallMode", Robot.elevator.isBallMode());
     SmartDashboard.putData("Auto mode", chooser);
     chooser.setDefaultOption("Rocket left -1", new cgAutoRocketLeft(1.0));
     chooser.addOption("Rocket left -2", new cgAutoRocketLeft(1.6));
-    chooser.addOption("Rocket Right -1", new cgAutoRocketRight(1.5));
+    chooser.addOption("Rocket Right -1", new cgAutoRocketRight(1.0));
     chooser.addOption("Rocket Right -2", new cgAutoRocketRight(1.6));
     chooser.addOption("Ship Middle -1", new cgAutoShipMiddle());
     chooser.addOption("Do Nothing", new cmdAutoNothing());
@@ -142,6 +143,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData(new cmdElbowDown());
     SmartDashboard.putData(new cmdElbowUp());
     SmartDashboard.putData(new cmdClimberTrigger());
+    SmartDashboard.putData(new cmdClimberExtend());
 
     // On the tab setup
     nteRangeInFront = Shuffleboard.getTab("Setup").add("RangeInFront", Robot.driveSystem.rangeInFront.getRangeInches())
@@ -166,12 +168,16 @@ public class Robot extends TimedRobot {
         .getEntry();
     nteClimberCurrent = Shuffleboard.getTab("Setup")
         .add("ClimberCurrent", Robot.climber.climberMotor.getOutputCurrent()).getEntry();
+    nteRangeToFloor = Shuffleboard.getTab("Setup").add("RangeToFloor", Robot.climber.rangeToFloor.getRangeInches())
+        .getEntry();
 
   }
 
   @Override
   public void robotPeriodic() {
 
+    SmartDashboard.putNumber("Elevator Position", Robot.elevator.elevatorPosition);
+    SmartDashboard.putBoolean("IsBallMode", Robot.elevator.isBallMode());
     nteRangeInFront.setDouble(Robot.driveSystem.rangeInFront.getRangeInches());
     ntePotValue.setDouble(Robot.elevator.elevatorPot.getAverageVoltage());
     nteCameraPitch.setDouble(Robot.vision.pitch);
@@ -185,6 +191,7 @@ public class Robot extends TimedRobot {
     nteBackRight.setDouble(Robot.driveSystem.backRightMotor.getOutputCurrent());
     nteFrontLeft.setDouble(Robot.driveSystem.frontLeftMotor.getOutputCurrent());
     nteFrontRight.setDouble(Robot.driveSystem.frontRightMotor.getOutputCurrent());
+    nteRangeToFloor.setDouble(Robot.climber.rangeToFloor.getRangeInches());
 
     // double v = Robot.vision.getAngle();
     // SmartDashboard.putBoolean("optical", RobotMap.opticalFront.get());

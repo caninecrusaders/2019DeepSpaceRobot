@@ -69,7 +69,7 @@ public class OI {
         aButton.whileHeld(new cmdVisionMode());
 
         xButton = new JoystickButton(xboxDriver, 3);
-        xButton.whileHeld(new cgClimberLvl2());
+        xButton.whenPressed(new cgClimberLvl2());
 
         // controller 2
         rightBumper2 = new JoystickButton(xboxDriver2, 6);

@@ -13,31 +13,35 @@ import frc.robot.Robot;
 
 public class cmdClimberDriveForward extends Command {
   boolean isClimbing = false;
+  double time;
+  double speed;
 
-  public cmdClimberDriveForward() {
+  public cmdClimberDriveForward(double timeOut, double speedIn) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.driveSystem);
-    setTimeout(8.5);
+    speed = speedIn;
+    setTimeout(timeOut);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.driveSystem.stop();
+    // Robot.driveSystem.stop();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.climber.rangeToFloor.getRangeInches() > 18 && !isClimbing) {
-      isClimbing = true;
-    }
-    if (isClimbing) {
-      Robot.driveSystem.drive(0.6);
-    } else {
-      Robot.driveSystem.stop();
-    }
+    // if (Robot.climber.rangeToFloor.getRangeInches() > 18 && !isClimbing) {
+    // isClimbing = true;
+    // }
+    // if (isClimbing) {
+    // Robot.driveSystem.drive(0.6);
+    // } else {
+    // Robot.driveSystem.stop();
+    // }
+    Robot.driveSystem.drive(speed);
   }
 
   // Make this return true when this Command no longer needs to run execute()

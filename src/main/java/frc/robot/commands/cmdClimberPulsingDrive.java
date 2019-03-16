@@ -15,12 +15,16 @@ public class cmdClimberPulsingDrive extends Command {
   double timeStart;
   boolean isMotorOn = false;
   int counter;
+  double time;
 
-  public cmdClimberPulsingDrive() {
+  public cmdClimberPulsingDrive(double timeOut) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.driveSystem);
-    setTimeout(3.0);
+    time = timeOut;
+    setTimeout(timeOut);
+    // drive forward lvl3 3 sec
+    // drive forward lvl2 5 sec
   }
 
   // Called just before this Command runs the first time
@@ -35,7 +39,7 @@ public class cmdClimberPulsingDrive extends Command {
   @Override
   protected void execute() {
     double deltaTime = Timer.getFPGATimestamp() - timeStart;
-    if (deltaTime >= 0.1) {
+    if (deltaTime >= 0.05) {
       counter++;
       timeStart = Timer.getFPGATimestamp();
       if (isMotorOn) {

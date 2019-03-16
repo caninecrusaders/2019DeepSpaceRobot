@@ -39,12 +39,13 @@ public class Elevator extends Subsystem implements PIDOutput {
 
   private final WPI_TalonSRX elevatorMotor = new WPI_TalonSRX(RobotMap.elevatorMotorID);
   public AnalogInput elevatorPot = new AnalogInput(RobotMap.elevatorPotID);
-  private final double[] potHatch = new double[] { 0.6, 0.476, 1.84, 3.055 };
-  private final double[] potBall = new double[] { 1.84, 0.866, 2.22, 3.35 }; // 0 position is ball human player
-  private double potCalibration = 1.03;
+  private final double[] potHatch = new double[] { 0.7, 0.69, 1.09, 1.45 }; // 0.6, 0.476, 1.84, 3.055
+  private final double[] potBall = new double[] { 0.7, 0.84, 1.25, 1.54 }; // 0 position feeder pos. 1.84, 0.866, 2.22,
+                                                                           // 3.35
+  private double potCalibration = 0.7;
   private boolean isBallMode = false;
   private boolean isAutoMode = false;
-  private int elevatorPosition = 0;
+  public int elevatorPosition = 0;
   private static int lastDirection;
 
   public void setPotCalibration(double potCal) {
@@ -155,6 +156,10 @@ public class Elevator extends Subsystem implements PIDOutput {
     int direction;
     double currentPosition = elevatorPot.getVoltage();
     target = potCalibration - potHatch[0] + target;
+    if (currentPosition < potCalibration) {
+      elevatorMotor.set(0.0);
+      return;
+    }
 
     if (target > currentPosition) {
       direction = 1;
@@ -175,11 +180,19 @@ public class Elevator extends Subsystem implements PIDOutput {
   }
 
   public void elevatorUp(double speed) {
-    elevatorMotor.set(speed);
+    if (elevatorPot.getAverageVoltage() >= 1.55) {
+      elevatorMotor.set(0);
+    } else {
+      elevatorMotor.set(speed);
+    }
   }
 
   public void elevatorDown(double speed) {
-    elevatorMotor.set(-speed);
+    if (elevatorPot.getAverageVoltage() <= 0.71) {
+      elevatorMotor.set(0);
+    } else {
+      elevatorMotor.set(-speed);
+    }
   }
 
   public void elevatorStop() {

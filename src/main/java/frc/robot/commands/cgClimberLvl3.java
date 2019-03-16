@@ -27,13 +27,16 @@ public class cgClimberLvl3 extends CommandGroup {
 
     // climbing with trigger lvl 3
 
-    addParallel(new cmdClimberDriveForward());
-    addSequential(new cmdClimberExtendToHeight(25));
+    // addParallel(new cmdClimberDriveForward());
+    addSequential(new cmdClimberExtendToHeight(23.5));
     addSequential(new cmdClimberTrigger());
     addSequential(new cgIntakeBall());
-    addParallel(new cmdClimberRetract(1.5));
-    addSequential(new cmdClimberPulsingDrive());
-    addSequential(new cmdClimberRetractSlow());
+    addSequential(new cmdClimberExtend());
+    addSequential(new cmdClimberDriveForward(0.5, 0.5));
+    addParallel(new cmdClimberRetract(12.0));
+    addSequential(new cmdClimberPulsingDrive(12.0));
+    // addSequential(new cmdClimberDriveForward(3.0, 0.1));
+    // addSequential(new cmdClimberRetractSlow());
 
     // climbing with trigger lvl 2
 

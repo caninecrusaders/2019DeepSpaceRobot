@@ -14,13 +14,14 @@ public class cgClimberLvl2 extends CommandGroup {
    * Add your docs here.
    */
   public cgClimberLvl2() {
-    addParallel(new cmdClimberDriveForward());
-    addSequential(new cmdClimberExtendToHeight(12));
+    // addParallel(new cmdClimberDriveForward());
+    addSequential(new cmdClimberExtendToHeight(15));
     addSequential(new cmdClimberTrigger());
     addSequential(new cgIntakeBall());
-    addSequential(new cmdClimberRetract(1.0));
-    addSequential(new cmdClimberPulsingDrive());
-    addSequential(new cmdClimberRetractSlow());
+    addSequential(new cmdClimberExtend());
+    addParallel(new cmdClimberRetract(5.0));
+    addSequential(new cmdClimberPulsingDrive(5.0));
+    // addSequential(new cmdClimberRetractSlow());
 
     // Add Commands here:
     // e.g. addSequential(new Command1());

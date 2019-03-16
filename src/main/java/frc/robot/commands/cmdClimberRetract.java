@@ -20,8 +20,8 @@ public class cmdClimberRetract extends Command {
     // eg. requires(chassis);
     requires(Robot.climber);
     // setTimeout(Timer.getFPGATimestamp() + Robot.climber.timeExtend + 3.0);
+    time = Time;
     setTimeout(time);
-    // time= Time;
   }
 
   // Called just before this Command runs the first time
@@ -36,7 +36,7 @@ public class cmdClimberRetract extends Command {
     // if (Robot.ahrs.getPitch() < 0.02 && Robot.ahrs.getPitch() > -0.02) {
     // Robot.climber.stop();
     // } else {
-    Robot.climber.up(0.5);
+    Robot.climber.up(0.4);
     // }
 
   }

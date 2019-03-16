@@ -34,11 +34,11 @@ public class Elbow extends Subsystem {
   }
 
   public void ElbowUp() {
-    armSolenoid.set(Value.kForward);
+    armSolenoid.set(Value.kReverse);
   }
 
   public void ElbowDown() {
-    armSolenoid.set(Value.kReverse);
+    armSolenoid.set(Value.kForward);
   }
 
   public void ElbowOff() {

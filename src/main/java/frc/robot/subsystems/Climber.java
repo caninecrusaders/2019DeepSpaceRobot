@@ -31,15 +31,15 @@ public class Climber extends Subsystem {
   public double startingPitch = 0;
 
   public Climber() {
-    climberTrigger.set(Value.kForward);
-  }
-
-  public void triggerFoot() {
     climberTrigger.set(Value.kReverse);
   }
 
-  public void triggerReset() {
+  public void triggerFoot() {
     climberTrigger.set(Value.kForward);
+  }
+
+  public void triggerReset() {
+    climberTrigger.set(Value.kReverse);
   }
 
   @Override
