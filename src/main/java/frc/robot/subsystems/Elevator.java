@@ -39,10 +39,9 @@ public class Elevator extends Subsystem implements PIDOutput {
 
   private final WPI_TalonSRX elevatorMotor = new WPI_TalonSRX(RobotMap.elevatorMotorID);
   public AnalogInput elevatorPot = new AnalogInput(RobotMap.elevatorPotID);
-  private final double[] potHatch = new double[] { 0.7, 0.69, 1.09, 1.45 }; // 0.6, 0.476, 1.84, 3.055
-  private final double[] potBall = new double[] { 0.7, 0.84, 1.25, 1.54 }; // 0 position feeder pos. 1.84, 0.866, 2.22,
-                                                                           // 3.35
-  private double potCalibration = 0.7;
+  private final double[] potHatch = new double[] { 1.02, 1.02, 2.34, 3.53 };
+  private final double[] potBall = new double[] { 2.23, 1.5, 2.84, 3.8 }; // 0 position feeder pos.
+  private double potCalibration = 1.02;
   private boolean isBallMode = false;
   private boolean isAutoMode = false;
   public int elevatorPosition = 0;
@@ -156,10 +155,10 @@ public class Elevator extends Subsystem implements PIDOutput {
     int direction;
     double currentPosition = elevatorPot.getVoltage();
     target = potCalibration - potHatch[0] + target;
-    if (currentPosition < potCalibration) {
-      elevatorMotor.set(0.0);
-      return;
-    }
+    // if (currentPosition < potCalibration) {
+    // elevatorMotor.set(0.0);
+    // return;
+    // }
 
     if (target > currentPosition) {
       direction = 1;
@@ -180,19 +179,19 @@ public class Elevator extends Subsystem implements PIDOutput {
   }
 
   public void elevatorUp(double speed) {
-    if (elevatorPot.getAverageVoltage() >= 1.55) {
-      elevatorMotor.set(0);
-    } else {
-      elevatorMotor.set(speed);
-    }
+    // if (elevatorPot.getAverageVoltage() >= ) {
+    // elevatorMotor.set(0);
+    // } else {
+    elevatorMotor.set(speed);
+    // }
   }
 
   public void elevatorDown(double speed) {
-    if (elevatorPot.getAverageVoltage() <= 0.71) {
-      elevatorMotor.set(0);
-    } else {
-      elevatorMotor.set(-speed);
-    }
+    // if (elevatorPot.getAverageVoltage() <= 0.85) {
+    // elevatorMotor.set(0);
+    // } else {
+    elevatorMotor.set(-speed);
+    // }
   }
 
   public void elevatorStop() {
