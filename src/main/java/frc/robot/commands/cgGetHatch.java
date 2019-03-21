@@ -14,6 +14,8 @@ public class cgGetHatch extends CommandGroup {
    * Add your docs here.
    */
   public cgGetHatch() {
+    addSequential(new cmdGrabberSlideOut());
+    addSequential(new cmdHatchGrabberGrab());
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

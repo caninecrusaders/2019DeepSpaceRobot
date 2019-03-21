@@ -65,6 +65,7 @@ public class Robot extends TimedRobot {
   public static Compressor compressor;
   public static Rumble rumble;
   public static Preferences prefs;
+  public static HatchGrabber hatch;
 
   Command autoCommand;
   SendableChooser<Command> chooser = new SendableChooser<Command>();
@@ -120,6 +121,8 @@ public class Robot extends TimedRobot {
     elbow = new Elbow();
 
     climber = new Climber();
+
+    // hatch = new HatchGrabber();
 
     compressor = new Compressor(1);
     compressor.setClosedLoopControl(true);
