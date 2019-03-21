@@ -18,7 +18,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 //import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.cgAutoRocketLeft;
+import frc.robot.commands.cgAutoRocketLeftBack;
+import frc.robot.commands.cgAutoRocketLeftBack2;
 import frc.robot.commands.cgAutoRocketRight;
+import frc.robot.commands.cgAutoRocketRightBack;
 import frc.robot.commands.cgAutoShipMiddle;
 import frc.robot.commands.cmdAutoDriveForward;
 import frc.robot.commands.cmdAutoNothing;
@@ -131,12 +134,15 @@ public class Robot extends TimedRobot {
 
     // On shuffleboard when first opened
     SmartDashboard.putData("Auto mode", chooser);
-    chooser.setDefaultOption("Rocket left -1", new cgAutoRocketLeft(1.0));
-    chooser.addOption("Rocket left -2", new cgAutoRocketLeft(1.6));
-    chooser.addOption("Rocket Right -1", new cgAutoRocketRight(1.0));
+    chooser.setDefaultOption("Rocket left -1", new cgAutoRocketLeft(0.8));
+    chooser.addOption("Rocket Left -2", new cgAutoRocketLeft(1.6));
+    chooser.addOption("Rocket Right -1", new cgAutoRocketRight(0.8));
     chooser.addOption("Rocket Right -2", new cgAutoRocketRight(1.6));
     chooser.addOption("Ship Middle -1", new cgAutoShipMiddle());
     chooser.addOption("Do Nothing", new cmdAutoNothing());
+    chooser.addOption("Rocket Left Back -1", new cgAutoRocketLeftBack(2.7));
+    chooser.addOption("Rocket Right Back -1", new cgAutoRocketRightBack(2.7));
+    chooser.addOption("Rocket Left Back -2", new cgAutoRocketLeftBack2(2.4));
 
     SmartDashboard.putData(new cmdWristUp());
     SmartDashboard.putData(new cmdWristDown());
