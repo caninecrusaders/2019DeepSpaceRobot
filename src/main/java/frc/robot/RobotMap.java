@@ -67,8 +67,10 @@ public class RobotMap {
 
   public static final int backTriggerID = 4;
   public static final int backEchoID = 5;
+
   public static final int floorTriggerID = 6;
   public static final int floorEchoID = 7;
+
   public static final int frontEchoID = 8;
   public static final int frontTriggerID = 9;
 
