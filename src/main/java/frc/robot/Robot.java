@@ -22,6 +22,7 @@ import frc.robot.commands.cgAutoRocketLeftBack;
 import frc.robot.commands.cgAutoRocketLeftBack2;
 import frc.robot.commands.cgAutoRocketRight;
 import frc.robot.commands.cgAutoRocketRightBack;
+import frc.robot.commands.cgAutoRocketRightBack2;
 import frc.robot.commands.cgAutoShipMiddle;
 import frc.robot.commands.cmdAutoDriveForward;
 import frc.robot.commands.cmdAutoNothing;
@@ -146,6 +147,7 @@ public class Robot extends TimedRobot {
     chooser.addOption("Rocket Left Back -1", new cgAutoRocketLeftBack(2.7));
     chooser.addOption("Rocket Right Back -1", new cgAutoRocketRightBack(2.7));
     chooser.addOption("Rocket Left Back -2", new cgAutoRocketLeftBack2(2.4));
+    chooser.addOption("Rocket Right Back -2", new cgAutoRocketRightBack2(2.4));
 
     SmartDashboard.putData(new cmdWristUp());
     SmartDashboard.putData(new cmdWristDown());
@@ -157,8 +159,9 @@ public class Robot extends TimedRobot {
     // On the tab setup
     nteRangeInFront = Shuffleboard.getTab("Setup").add("RangeInFront", Robot.driveSystem.rangeInFront.getRangeInches())
         .getEntry();
-    nteRangeInBack = Shuffleboard.getTab("Setup").add("RangeInBack", Robot.driveSystem.rangeInBack.getRangeInches())
-        .getEntry();
+    // nteRangeInBack = Shuffleboard.getTab("Setup").add("RangeInBack",
+    // Robot.driveSystem.rangeInBack.getRangeInches())
+    // .getEntry();
     nteCameraPitch = Shuffleboard.getTab("Setup").add("Camera Pitch", Robot.vision.pitch).getEntry();
     nteCameraYaw = Shuffleboard.getTab("Setup").add("Camera Yaw", Robot.vision.yaw).getEntry();
     nteYaw = Shuffleboard.getTab("Setup").add("Yaw", ahrs.getYaw()).getEntry();
@@ -193,7 +196,7 @@ public class Robot extends TimedRobot {
     nteCameraYaw.setDouble(Robot.vision.yaw);
     nteVisionAngle.setDouble(Robot.driveSystem.visionAngle);
     nteYaw.setDouble(ahrs.getYaw());
-    nteRangeInBack.setDouble(Robot.driveSystem.rangeInBack.getRangeInches());
+    // nteRangeInBack.setDouble(Robot.driveSystem.rangeInBack.getRangeInches());
     ntePitch.setDouble(ahrs.getPitch());
     nteRoll.setDouble(ahrs.getRoll());
     nteBackLeft.setDouble(Robot.driveSystem.backLeftMotor.getOutputCurrent());
