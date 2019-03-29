@@ -139,15 +139,15 @@ public class Robot extends TimedRobot {
     // On shuffleboard when first opened
     SmartDashboard.putData("Auto mode", chooser);
     chooser.setDefaultOption("Rocket left -1", new cgAutoRocketLeft(0.8));
-    chooser.addOption("Rocket Left -2", new cgAutoRocketLeft(1.6));
     chooser.addOption("Rocket Right -1", new cgAutoRocketRight(0.8));
-    chooser.addOption("Rocket Right -2", new cgAutoRocketRight(1.6));
-    chooser.addOption("Ship Middle -1", new cgAutoShipMiddle());
-    chooser.addOption("Do Nothing", new cmdAutoNothing());
     chooser.addOption("Rocket Left Back -1", new cgAutoRocketLeftBack(2.7));
     chooser.addOption("Rocket Right Back -1", new cgAutoRocketRightBack(2.7));
+    chooser.addOption("Ship Middle -1", new cgAutoShipMiddle());
+    chooser.addOption("Rocket Left -2", new cgAutoRocketLeft(1.6));
+    chooser.addOption("Rocket Right -2", new cgAutoRocketRight(1.6));
     chooser.addOption("Rocket Left Back -2", new cgAutoRocketLeftBack2(2.4));
     chooser.addOption("Rocket Right Back -2", new cgAutoRocketRightBack2(2.4));
+    chooser.addOption("Do Nothing", new cmdAutoNothing());
 
     SmartDashboard.putData(new cmdWristUp());
     SmartDashboard.putData(new cmdWristDown());

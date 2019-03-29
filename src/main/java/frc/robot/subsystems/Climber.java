@@ -31,6 +31,8 @@ public class Climber extends Subsystem {
   public double startingPitch = 0;
 
   public Climber() {
+    climberMotor.configOpenloopRamp(1.0);
+    climberMotor2.configOpenloopRamp(1.0);
     climberTrigger.set(Value.kReverse);
   }
 

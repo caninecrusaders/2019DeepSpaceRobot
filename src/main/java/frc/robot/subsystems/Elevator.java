@@ -47,6 +47,11 @@ public class Elevator extends Subsystem implements PIDOutput {
   public int elevatorPosition = 0;
   private static int lastDirection;
 
+  private void elevatorRampRate(double ramp) {
+    elevatorMotor.configNominalOutputForward(0.1);
+    elevatorMotor.configOpenloopRamp(ramp);
+  }
+
   public void setPotCalibration(double potCal) {
     potCalibration = potCal;
   }
@@ -182,6 +187,7 @@ public class Elevator extends Subsystem implements PIDOutput {
     // if (elevatorPot.getAverageVoltage() >= ) {
     // elevatorMotor.set(0);
     // } else {
+    elevatorRampRate(0.5);
     elevatorMotor.set(speed);
     // }
   }
@@ -190,6 +196,7 @@ public class Elevator extends Subsystem implements PIDOutput {
     // if (elevatorPot.getAverageVoltage() <= 0.85) {
     // elevatorMotor.set(0);
     // } else {
+    elevatorRampRate(0.25);
     elevatorMotor.set(-speed);
     // }
   }

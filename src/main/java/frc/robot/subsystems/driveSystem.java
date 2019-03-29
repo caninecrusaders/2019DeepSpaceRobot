@@ -85,6 +85,13 @@ public class driveSystem extends Subsystem implements PIDOutput {
 		LiveWindow.add(controller);
 	}
 
+	private void driveSystemRampRate(double ramp) {
+		frontLeftMotor.configOpenloopRamp(ramp);
+		frontRightMotor.configOpenloopRamp(ramp);
+		backLeftMotor.configOpenloopRamp(ramp);
+		backRightMotor.configOpenloopRamp(ramp);
+	}
+
 	public void setUpPIDController() {
 		controller = new PIDController(kP, kI, kD, kF, Robot.ahrs, this);
 		controller.setInputRange(-180.0f, 180.0f);
@@ -154,9 +161,11 @@ public class driveSystem extends Subsystem implements PIDOutput {
 		// driveControl.curvatureDrive(throttle, -turn, false);
 		if (throttle > -.1 && throttle < 0.1 && !inVisionMode) {
 			if (Timer.getFPGATimestamp() - lastThrottleTime > 0.25) {
+				driveSystemRampRate(0.8);
 				driveControl.curvatureDrive(0, -turn * 0.6, true);
 			}
 		} else {
+			driveSystemRampRate(1.5);
 			driveControl.curvatureDrive(throttle, -turn, false);
 			lastThrottleTime = Timer.getFPGATimestamp();
 		}
@@ -235,6 +244,7 @@ public class driveSystem extends Subsystem implements PIDOutput {
 
 	public void rotate(double speed) {
 		// driveControl.tankDrive(speed, -speed);
+		driveSystemRampRate(1.5);
 		driveControl.curvatureDrive(0, speed, true);
 	}
 
@@ -331,6 +341,7 @@ public class driveSystem extends Subsystem implements PIDOutput {
 	}
 
 	public void drive(double speed) {
+		driveSystemRampRate(1.5);
 		driveControl.curvatureDrive(-speed, 0, false);
 
 		// frontLeftMotor.set(speed);
@@ -354,6 +365,7 @@ public class driveSystem extends Subsystem implements PIDOutput {
 			enablePIDController(angle);
 			isRotating = true;
 		}
+		driveSystemRampRate(1.5);
 		driveControl.curvatureDrive(-speed, -rotateToAngleRate, true);
 	}
 
