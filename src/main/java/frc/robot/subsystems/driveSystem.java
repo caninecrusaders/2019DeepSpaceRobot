@@ -65,6 +65,9 @@ public class driveSystem extends Subsystem implements PIDOutput {
 	DifferentialDrive driveControl;
 	double deadZone = 0.15;
 
+	double driveRamp = 0.6;
+	double turnRamp = 0.1;
+
 	boolean stop = false;
 	boolean isRotating = false;
 
@@ -161,11 +164,15 @@ public class driveSystem extends Subsystem implements PIDOutput {
 		// driveControl.curvatureDrive(throttle, -turn, false);
 		if (throttle > -.1 && throttle < 0.1 && !inVisionMode) {
 			if (Timer.getFPGATimestamp() - lastThrottleTime > 0.25) {
-				driveSystemRampRate(0.8);
+				if (Math.abs(turn) < 0.1) {
+					driveSystemRampRate(0);
+				} else {
+					driveSystemRampRate(turnRamp);
+				}
 				driveControl.curvatureDrive(0, -turn * 0.6, true);
 			}
 		} else {
-			driveSystemRampRate(1.5);
+			driveSystemRampRate(driveRamp);
 			driveControl.curvatureDrive(throttle, -turn, false);
 			lastThrottleTime = Timer.getFPGATimestamp();
 		}
@@ -244,7 +251,7 @@ public class driveSystem extends Subsystem implements PIDOutput {
 
 	public void rotate(double speed) {
 		// driveControl.tankDrive(speed, -speed);
-		driveSystemRampRate(1.5);
+		driveSystemRampRate(turnRamp);
 		driveControl.curvatureDrive(0, speed, true);
 	}
 
@@ -341,7 +348,7 @@ public class driveSystem extends Subsystem implements PIDOutput {
 	}
 
 	public void drive(double speed) {
-		driveSystemRampRate(1.5);
+		driveSystemRampRate(driveRamp);
 		driveControl.curvatureDrive(-speed, 0, false);
 
 		// frontLeftMotor.set(speed);
@@ -365,7 +372,7 @@ public class driveSystem extends Subsystem implements PIDOutput {
 			enablePIDController(angle);
 			isRotating = true;
 		}
-		driveSystemRampRate(1.5);
+		driveSystemRampRate(driveRamp);
 		driveControl.curvatureDrive(-speed, -rotateToAngleRate, true);
 	}
 
