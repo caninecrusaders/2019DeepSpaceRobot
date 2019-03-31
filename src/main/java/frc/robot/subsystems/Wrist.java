@@ -8,15 +8,11 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.cmdWristXbox;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 /**
@@ -30,8 +26,8 @@ public class Wrist extends Subsystem {
   public DoubleSolenoid hatchSolenoid = new DoubleSolenoid(RobotMap.hatchModuleID, RobotMap.hatchExtendID,
       RobotMap.hatchRetractID);
   private final WPI_TalonSRX intakeMotor = new WPI_TalonSRX(RobotMap.intakeMotorID);
-  private boolean WristDown = false;
-  private boolean WristUp = true;
+  // private boolean WristDown = false;
+  // private boolean WristUp = true;
   // public final AnalogInput rangeFinder = new
   // AnalogInput(RobotMap.rangeFinderID);
 

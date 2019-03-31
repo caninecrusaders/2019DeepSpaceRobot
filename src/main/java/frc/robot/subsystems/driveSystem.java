@@ -24,8 +24,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 //import java.io.Console;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -44,10 +42,10 @@ public class driveSystem extends Subsystem implements PIDOutput {
 	public boolean isVisionAngleValid = false;
 	PIDController controller;
 	double rotateToAngleRate;
-	static final double kP = 0.02; // 0.015
-	static final double kI = 0.001;
-	static final double kD = 0.045; // 0.03
-	static final double kF = 0.1;
+	static final double kP = 0.009; // 0.02
+	static final double kI = 0.00; // 0.001
+	static final double kD = 0.045; // 0.045
+	static final double kF = 0.1; // 0.1
 	static final double kToleranceDegrees = 2.0f;
 	double last_world_linear_accel_x;
 	double last_world_linear_accel_y;

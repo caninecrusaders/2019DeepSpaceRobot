@@ -8,7 +8,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Command;
 //import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -23,8 +22,11 @@ import frc.robot.commands.cgAutoRocketLeftBack2;
 import frc.robot.commands.cgAutoRocketRight;
 import frc.robot.commands.cgAutoRocketRightBack;
 import frc.robot.commands.cgAutoRocketRightBack2;
+import frc.robot.commands.cgAutoShipFrontLeft2;
+import frc.robot.commands.cgAutoShipFrontRight2;
+import frc.robot.commands.cgAutoShipLeftSide;
 import frc.robot.commands.cgAutoShipMiddle;
-import frc.robot.commands.cmdAutoDriveForward;
+import frc.robot.commands.cgAutoShipRightSide;
 import frc.robot.commands.cmdAutoNothing;
 import frc.robot.commands.cmdClimberExtend;
 import frc.robot.commands.cmdClimberTrigger;
@@ -35,13 +37,9 @@ import frc.robot.commands.cmdWristUp;
 import frc.robot.subsystems.*;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Preferences;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.networktables.EntryListenerFlags;
-import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Compressor;
@@ -66,7 +64,6 @@ public class Robot extends TimedRobot {
   public static Compressor compressor;
   public static Rumble rumble;
   public static Preferences prefs;
-  public static HatchGrabber hatch;
 
   Command autoCommand;
   SendableChooser<Command> chooser = new SendableChooser<Command>();
@@ -143,10 +140,17 @@ public class Robot extends TimedRobot {
     chooser.addOption("Rocket Left Back -1", new cgAutoRocketLeftBack(2.7));
     chooser.addOption("Rocket Right Back -1", new cgAutoRocketRightBack(2.7));
     chooser.addOption("Ship Middle -1", new cgAutoShipMiddle());
+    chooser.addOption("Ship Right Side -1", new cgAutoShipRightSide(2.5));
+    chooser.addOption("Ship Left Side -1", new cgAutoShipLeftSide(2.5));
     chooser.addOption("Rocket Left -2", new cgAutoRocketLeft(1.6));
     chooser.addOption("Rocket Right -2", new cgAutoRocketRight(1.6));
     chooser.addOption("Rocket Left Back -2", new cgAutoRocketLeftBack2(2.4));
     chooser.addOption("Rocket Right Back -2", new cgAutoRocketRightBack2(2.4));
+    chooser.addOption("Ship Right Side -2", new cgAutoShipRightSide(3.0));
+    chooser.addOption("Ship Left Side -2", new cgAutoShipLeftSide(3.0));
+    chooser.addOption("Ship Left Front -2", new cgAutoShipFrontLeft2());
+    chooser.addOption("Ship Right Front -2", new cgAutoShipFrontRight2());
+
     chooser.addOption("Do Nothing", new cmdAutoNothing());
 
     SmartDashboard.putData(new cmdWristUp());
@@ -238,6 +242,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    ahrs.zeroYaw();
     autoCommand = chooser.getSelected();
     autoCommand.start();
     // autoCommand = new cgAutoRocketLeft();

@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import frc.robot.Robot;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
