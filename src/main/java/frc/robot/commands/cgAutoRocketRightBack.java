@@ -15,8 +15,8 @@ public class cgAutoRocketRightBack extends CommandGroup {
    */
   public cgAutoRocketRightBack(double forwardTime) {
     addParallel(new cmdElevatorUp(0.1, 1.0));
-    addSequential(new cmdAutoDriveForward(0.8, 0));
-    addSequential(new cmdAutoDriveForward(forwardTime, 16));
+    addSequential(new cmdAutoDriveForward(0.5, 0.8, 0));
+    addSequential(new cmdAutoDriveForward(0.5, forwardTime, 16));
     addSequential(new cmdDriveTurnToAngle(5, 145));
 
     // addParallel(new cmdElevatorUp(0.1, 1.0));

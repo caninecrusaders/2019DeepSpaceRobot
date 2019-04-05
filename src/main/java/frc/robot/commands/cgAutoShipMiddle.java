@@ -15,7 +15,7 @@ public class cgAutoShipMiddle extends CommandGroup {
    */
   public cgAutoShipMiddle() {
     addParallel(new cmdElevatorUp(0.1, 1.0));
-    addSequential(new cmdAutoDriveForward(1.4, 0));
+    addSequential(new cmdAutoDriveForward(0.5, 1.4, 0));
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

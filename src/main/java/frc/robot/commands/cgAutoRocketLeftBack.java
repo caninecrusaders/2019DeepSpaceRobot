@@ -8,14 +8,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class cgAutoRocketLeftBack extends CommandGroup {
   /**
    * Add your docs here.
    */
   public cgAutoRocketLeftBack(double forwardTime) {
+    // addSequential(new WaitCommand(3.0));
     addParallel(new cmdElevatorUp(0.1, 1.0));
-    addSequential(new cmdAutoDriveForward(forwardTime, -16));
+    addSequential(new cmdAutoDriveForward(0.5, forwardTime, -16));
     addSequential(new cmdDriveTurnToAngle(3, -145));
     // addSequential(new cmdAutoDriveForward(0, -145));
     // Add Commands here:

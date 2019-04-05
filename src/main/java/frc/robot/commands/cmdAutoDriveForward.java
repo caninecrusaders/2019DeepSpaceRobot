@@ -12,11 +12,13 @@ import frc.robot.Robot;
 
 public class cmdAutoDriveForward extends Command {
   double angle;
+  double speed;
 
-  public cmdAutoDriveForward(double timeOut, double driveToAngle) {
+  public cmdAutoDriveForward(double speedIn, double timeOut, double driveToAngle) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     angle = driveToAngle;
+    speed = speedIn;
     requires(Robot.driveSystem);
     setTimeout(timeOut);
   }
@@ -31,7 +33,7 @@ public class cmdAutoDriveForward extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveSystem.driveForward(0.5, angle);
+    Robot.driveSystem.driveForward(speed, angle);
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -32,7 +32,7 @@ public class cgClimberLvl3 extends CommandGroup {
     addSequential(new cgIntakeBall());
     addSequential(new cmdClimberExtend());
     addSequential(new cmdClimberDriveForward(0.5, 0.5));
-    addParallel(new cmdClimberRetract(12.0));
+    addParallel(new cmdClimberRetract(12.0, 0.4)); // 0.4 speed
     addSequential(new cmdClimberPulsingDrive(12.0));
     // addSequential(new cmdClimberDriveForward(3.0, 0.1));
     // addSequential(new cmdClimberRetractSlow());

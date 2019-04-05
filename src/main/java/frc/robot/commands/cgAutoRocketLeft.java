@@ -15,9 +15,9 @@ public class cgAutoRocketLeft extends CommandGroup {
    */
   public cgAutoRocketLeft(double forwardTime) {
     addParallel(new cmdElevatorUp(0.1, 1.0));
-    addSequential(new cmdAutoDriveForward(forwardTime, 0));
+    addSequential(new cmdAutoDriveForward(0.5, forwardTime, 0));
     // addSequential(new cmdDriveTurnToAngle(2, 90));
-    addSequential(new cmdAutoDriveForward(1.3, -45));
+    addSequential(new cmdAutoDriveForward(0.5, 1.3, -45));
 
     // Add Commands here:
     // e.g. addSequential(new Command1());

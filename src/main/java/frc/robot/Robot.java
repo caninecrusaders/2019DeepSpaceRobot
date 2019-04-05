@@ -144,8 +144,8 @@ public class Robot extends TimedRobot {
     chooser.addOption("Rocket Right -2", new cgAutoRocketRight(1.6));
     chooser.addOption("Rocket Left Back -2", new cgAutoRocketLeftBack(2.4));
     chooser.addOption("Rocket Right Back -2", new cgAutoRocketRightBack(2.4));
-    chooser.addOption("Ship Right Side -2", new cgAutoShipRightSide(3.0));
-    chooser.addOption("Ship Left Side -2", new cgAutoShipLeftSide(3.0));
+    chooser.addOption("Ship Right Side -2", new cgAutoShipRightSide(2.9));
+    chooser.addOption("Ship Left Side -2", new cgAutoShipLeftSide(2.9));
     chooser.addOption("Ship Left Front -2", new cgAutoShipFrontLeft2());
     chooser.addOption("Ship Right Front -2", new cgAutoShipFrontRight2());
 

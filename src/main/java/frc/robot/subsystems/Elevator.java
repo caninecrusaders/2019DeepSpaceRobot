@@ -38,9 +38,9 @@ public class Elevator extends Subsystem implements PIDOutput {
 
   private final WPI_TalonSRX elevatorMotor = new WPI_TalonSRX(RobotMap.elevatorMotorID);
   public AnalogInput elevatorPot = new AnalogInput(RobotMap.elevatorPotID);
-  private final double[] potHatch = new double[] { 1.02, 1.02, 2.34, 3.69 };
-  private final double[] potBall = new double[] { 2.706, 1.5, 2.84, 4.0 }; // 0 position feeder pos.
-  private double potCalibration = 1.02;
+  private final double[] potHatch = new double[] { 1.49, 1.49, 2.76, 3.99 };
+  private final double[] potBall = new double[] { 2.75, 2.03, 3.22, 4.3 }; // 0 position feeder pos.
+  private double potCalibration = 1.49;
   private boolean isBallMode = false;
   private boolean isAutoMode = false;
   public int elevatorPosition = 0;

@@ -12,14 +12,16 @@ import frc.robot.Robot;
 
 public class cmdClimberRetract extends Command {
   double time;
+  double speed;
 
   // double timeStart;
-  public cmdClimberRetract(double Time) {
+  public cmdClimberRetract(double Time, double Speed) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.climber);
     // setTimeout(Timer.getFPGATimestamp() + Robot.climber.timeExtend + 3.0);
     time = Time;
+    speed = Speed;
     setTimeout(time);
   }
 
@@ -35,7 +37,7 @@ public class cmdClimberRetract extends Command {
     // if (Robot.ahrs.getPitch() < 0.02 && Robot.ahrs.getPitch() > -0.02) {
     // Robot.climber.stop();
     // } else {
-    Robot.climber.up(0.4);
+    Robot.climber.up(speed);
     // }
 
   }
